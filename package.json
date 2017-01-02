@@ -1,6 +1,6 @@
 {
   "name": "booking-data",
-  "version": "v0.17.7",
+  "version": "1.0.0",
   "description": "Smoove Booking Data Viz",
   "main": "index.html",
   "scripts": {
