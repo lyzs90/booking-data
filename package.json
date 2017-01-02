@@ -1,0 +1,19 @@
+{
+  "name": "booking-data",
+  "version": "v0.17.7",
+  "description": "Smoove Booking Data Viz",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/lyzs90/booking-data"
+  },
+  "author": "lyzs90",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.18.5",
+    "gulp": "^3.9.1"
+  }
+}
