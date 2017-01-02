@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" height="200px" xmlns:xlink="http://www.w3.org/1999/xlink" width="565px" version="1.1" viewBox="0 0 565 200">
+ <defs>
+  <filter id="blur" style="color-interpolation-filters:sRGB">
+   <feGaussianBlur stdDeviation="5" result="blur"/>
+   <feComposite operator="atop" result="composite1" in2="blur" in="SourceGraphic"/>
+   <feComposite operator="in" result="composite2" in2="composite1"/>
+   <feComposite operator="in" result="composite3" in2="composite2"/>
+  </filter>
+  <linearGradient id="SVGID_1_" y2="62.174" gradientUnits="userSpaceOnUse" y1="62.056" x2="80.714" x1="31.766">
+   <stop stop-color="#231F20" stop-opacity=".1" offset="0"/>
+   <stop stop-color="#4B4748" stop-opacity=".1451" offset=".062989"/>
+   <stop stop-color="#817F7F" stop-opacity=".2138" offset=".1589"/>
+   <stop stop-color="#AEADAD" stop-opacity=".2808" offset=".2523"/>
+   <stop stop-color="#D1D0D1" stop-opacity=".3444" offset=".3411"/>
+   <stop stop-color="#EAEAEA" stop-opacity=".4038" offset=".424"/>
+   <stop stop-color="#FAFAFA" stop-opacity=".4573" offset=".4987"/>
+   <stop stop-color="#ffffff" stop-opacity=".5" offset=".5583"/>
+   <stop stop-color="#ffffff" offset=".8896"/>
+  </linearGradient>
+  <path id="bottom" d="m56.5 165.9c-4.5-25.7-31-68.8-34.1-72.8 9.4 5.9 20.9 8.7 31.7 6 15.1-4 24.7-14.6 20.1-30.1-4-14.1-15.4-18.4-22.4-23.7-15.9-12.1 4.6-37.3 30.7-23.5 8.8 4.7 14.8 11 18.3 19.4 6.8 16.8 2.3 32.5-6.7 47-16.2 25.7-33.1 53.9-37.6 77.7"/>
+  <path id="left" d="m41.5 10.2c20.8-6.5 42.7 1.6 54.7 18.4-23-30.6-74.6-15.5-65.8 15.5 2.9 10.2 12.6 15.3 21.4 22.1 8.4 6.4 8.8 12.3 5.7 16.9-5.9 8.7-17.2 10.1-27.2 6.6-15.3-5.5-24.6-19.9-23.3-36.4 1.6-19.5 14.7-37 34.5-43.1"/>
+  <path id="right" d="m76.5 25.8c-7.9-4.7-17.8-6.6-25-2.1-6.5 6.1-7.8 15.5 0.3 21.6 7 5.4 18.4 9.6 22.4 23.7 4.6 15.5-5 26.1-20.1 30.1-10.8 2.8-22.4-0.1-31.7-6 0.2 0.3 0.6 0.8 1 1.4 9.1 7 20.1 9.3 29.8 8.3 22.1-2.9 35.5-16.1 40-35.2 3.9-16.1-5.5-35.2-16.7-41.8z"/>
+  <ellipse id="shadow" rx="18.729" ry="7.2034" transform="matrix(1.3381 0 0 1.5089 -19.096 -87.422)" filter="url(#blur)" cy="171.78" cx="56.487" fill="#808080"/>
+  <path id="background" d="m54.87 3.7909c-4.885 0.0901-9.838 0.8442-14.734 2.3287-21.306 6.3684-35.402 24.641-37.124 44.999-1.3989 17.227 12.118 35.21 16.963 41.479 2.944 4.249 31.459 49.252 36.301 76.082 4.842-24.85 23.027-54.29 40.459-81.125 9.685-15.139 16.025-29.488 4.735-55.647-9.991-22.096-29.152-28.439-46.6-28.117z" fill="#fff"/>
+ </defs>
+ <g>
+  <use xlink:href = "#shadow"/>
+  <use xlink:href = "#background"/>
+  <use xlink:href = "#bottom" fill="#5385c5"/>
+  <use xlink:href = "#left" fill="#f68d2c"/>
+  <use xlink:href = "#right" fill="url(#SVGID_1_)" opacity=".3"/>
+ </g>
+</svg>

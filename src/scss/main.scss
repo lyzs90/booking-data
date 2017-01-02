@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body {
+    font-family: 'Lato', sans-serif;
+    display: flex;
+    flex-direction: column;
+    h1 {
+        font-size: 32px;
+    }
+    #mapdiv {
+        margin-top: 25px;
+        height: 100%;
+        max-height: 500px;
+        div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper > div {
+            font-family: 'Lato', sans-serif;
+        }
+    }
+}
