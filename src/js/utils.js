@@ -8,4 +8,9 @@ let ajax = (options) => {
     });
 }
 
-module.exports = {ajax};
+let findLoc = (locData, locId) => {
+    let elem = locData.find(x => x.id === locId);
+    return [elem.longitude, elem.latitude];
+}
+
+module.exports = {ajax, findLoc};

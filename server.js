@@ -1,10 +1,10 @@
 'use strict';
 
 const restify = require('restify');
-const data = require('./data/bookingdata.json');
+const bookings = require('./data/bookingdata.json');
 const locations = require('./data/smoovelocations.json');
 
-console.log(`Loaded ${data.length} records.`);
+console.log(`Loaded ${bookings.length} records.`);
 console.log(`Loaded ${locations.length} locations.`);
 
 var server = restify.createServer();
@@ -24,9 +24,9 @@ server.get('/locations', (req, res, next) => {
     next();
 });
 
-// single booking query
-server.get('/:index', (req, res, next) => {
-    res.send(data[req.query.index]);
+// batch bookings query
+server.get('/bookings', (req, res, next) => {
+    res.send(bookings);
     next();
 });
 
