@@ -21,6 +21,7 @@ basemap.addTo(map);
 
 // Custom Mapmarkers
 let model = {};
+
 utils.ajax({  // Add parking locations
     url: 'http://localhost:8080/locations',
     type: 'get',
@@ -38,14 +39,17 @@ utils.ajax({  // Add parking locations
 }).then((bookingData) => {
     model.bookingData = bookingData;
 }).then(() => {
-    for (let booking of model.bookingData.slice(0, 1)) {
-        booking.start_location = utils.findLoc(model.locData, booking.start_location);
-        booking.end_location = utils.findLoc(model.locData, booking.end_location)
-        return booking;
+    for (let booking of model.bookingData.slice(0, 50)) {
+        // convert start and end location id to latlng
+        try {
+            booking.start_location = utils.findLoc(model.locData, booking.start_location);
+            booking.end_location = utils.findLoc(model.locData, booking.end_location)
+            // TODO: animate car movement to end_location
+            mapmarkers.addCar(map, mapmarkers.createCar(booking));
+        } catch (err) {
+            // location doesn't exist
+        }
     }
-}).then((booking) => {
-    console.log(booking);
-    mapmarkers.addCar(map, mapmarkers.createCar(booking));
 }).catch((error) => {
     throw error;
 });

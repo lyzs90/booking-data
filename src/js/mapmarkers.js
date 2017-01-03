@@ -24,7 +24,8 @@ let createCar = (data) => {
     return {
         'type': 'Feature',
         'properties': {
-            'id': data.id
+            'id': data.id,
+            'car': data.car
         },
         'geometry': {
             'type': 'Point',
@@ -76,6 +77,9 @@ let addCar = (map, geojsonFeature) => {
                 popupAnchor: [-3, -30] // point from which the popup should open relative to the iconAnchor
             });
             return L.marker(latlng, {icon: carIcon});
+        },
+        onEachFeature: (feature, layer) => {
+            layer.bindPopup(`<b>Car Id:</b> ${feature.properties.car}<br><b>Booking Id:</b> ${feature.properties.id}`);
         }
     }).addTo(map);
 }
