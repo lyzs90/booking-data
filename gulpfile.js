@@ -4,7 +4,7 @@ const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const browserify = require('browserify');
 const babelify = require('babelify');
-const hmr = require('browserify-hmr');
+//const hmr = require('browserify-hmr');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const sourcemaps = require('gulp-sourcemaps');
@@ -23,7 +23,7 @@ gulp.task('sass', function () {
 gulp.task('js', function () {
     return browserify({
         entries: './src/index.js',
-        plugin: [hmr],
+        //plugin: [hmr],
         debug: true,
         transform: [
             ['babelify', {
