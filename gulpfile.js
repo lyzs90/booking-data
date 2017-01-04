@@ -1,13 +1,15 @@
 'use strict';
 
-var gulp = require('gulp');
-var browserSync = require('browser-sync').create();
-var browserify = require('browserify');
-var babelify = require('babelify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var sass = require('gulp-sass');
-var gutil = require('gulp-util');
+const gulp = require('gulp');
+const browserSync = require('browser-sync').create();
+const browserify = require('browserify');
+const babelify = require('babelify');
+const hmr = require('browserify-hmr');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const sourcemaps = require('gulp-sourcemaps');
+const sass = require('gulp-sass');
+const gutil = require('gulp-util');
 
 // Compile sass into css & auto-inject into browser
 gulp.task('sass', function () {
@@ -20,11 +22,12 @@ gulp.task('sass', function () {
 // Bundle js and copy to dist folder
 gulp.task('js', function () {
     return browserify({
-        entries: './src/js/index.js',
+        entries: './src/index.js',
+        plugin: [hmr],
         debug: true,
         transform: [
             ['babelify', {
-                'presets': ['es2015']
+                'presets': ['es2015', 'react']
             }]
         ]
     })
@@ -34,7 +37,9 @@ gulp.task('js', function () {
         })
         .pipe(source('bundle.js'))
         .pipe(buffer())
-        .pipe(gulp.dest('./dist/js'))
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(sourcemaps.write('./maps'))
+        .pipe(gulp.dest('./dist/'))
         .pipe(browserSync.stream());
 })
 
@@ -61,7 +66,7 @@ gulp.task('browser-sync', ['sass', 'js', 'vendor'], function () {
 
     gulp.watch('./*.html').on('change', browserSync.reload);
     gulp.watch('./src/scss/**/*.scss', ['sass']).on('change', browserSync.reload);
-    gulp.watch('./src/js/**/*.js', ['js']).on('change', browserSync.reload);
+    gulp.watch('./src/**/*.js', ['js']).on('change', browserSync.reload);
 });
 
 gulp.task('default', ['browser-sync']);

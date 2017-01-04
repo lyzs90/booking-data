@@ -16,9 +16,9 @@ body {
             color: #777;
         }
     }
-    #mapdiv {
+    .leaflet-container {
         margin-top: 25px;
-        height: 100%;
+        height: 500px;
         max-height: 500px;
         div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper > div {
             font-family: 'Lato', sans-serif;
