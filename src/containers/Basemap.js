@@ -5,7 +5,7 @@ import L from 'leaflet';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import {ajax, findLoc} from '../utils/api';
 import {setIcon, createMarkerList} from '../utils/mapmarkers';
-import { SmooveMarkersList, CarMarkersList } from './Markers';
+import { SmooveMarkerList, CarMarkerList } from '../components/MarkerList';
 
 const center = L.bounds([1.56073, 104.11475], [1.16, 103.502]).getCenter();
 
@@ -84,8 +84,8 @@ export default class Basemap extends Component {
                     maxZoom='18'
                     minZoom='11'
                 />
-                <SmooveMarkersList markers={this.state.smooveMarkers} />
-                <CarMarkersList markers={this.state.carMarkers} />
+                <SmooveMarkerList markers={this.state.smooveMarkers} />
+                <CarMarkerList markers={this.state.carMarkers} />
             </Map>
         );
     }

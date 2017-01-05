@@ -2,10 +2,25 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import Timer from './components/Timer';
-import Basemap from './components/Basemap';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './reducers/rootReducer';
+import App from './components/App';
 
-// TODO: day night cycle http://maps-{s}.onemap.sg/v2/Night/{z}/{x}/{y}.png
+/*
+ * Store
+ * - Holds application state
+ * - Allows access to state via getState()
+ * - Allows state to be updated via dispatch(action)
+ * - Registers listeners via subscribe(listener)
+ * - Handles unregistering of listeners via the function returned by subscribe(listener)
+ */
 
-render(<Timer />, document.getElementById('timer'));
-render(<Basemap />, document.getElementById('map'));
+let store = createStore(rootReducer);
+
+render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+);

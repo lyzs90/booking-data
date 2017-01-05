@@ -4,25 +4,25 @@ import React, { Component } from 'react';
 
 // Define poppers as stateless functional components
 
-const SmoovePopper = (props) => {
+const SmoovePopper = ({ shortName, id, description, deleted }) => {
     return (
         <div id ="smoovePopper">
-            <h3>{props.shortName}</h3>
+            <h3>{shortName}</h3>
             <p>
-                <b>Id:</b> {props.id}<br />
-                <b>Description:</b> {props.description}<br />
-                <b>Deleted:</b> {props.deleted}
+                <b>Id:</b> {id}<br />
+                <b>Description:</b> {description}<br />
+                <b>Deleted:</b> {deleted}
             </p>
         </div>
     )
 }
 
-const CarPopper = (props) => {
+const CarPopper = ({ car, id }) => {
     return (
         <div id = "carPopper">
-            <h3>Car {props.car}</h3>
+            <h3>Car {car}</h3>
             <p>
-                <b>Booking Id:</b> {props.id}
+                <b>Booking Id:</b> {id}
             </p>
         </div>
     )
