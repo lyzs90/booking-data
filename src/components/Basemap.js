@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import {ajax, findLoc} from '../utils/api';
-import {smooveIcon, smooveIconFade, carIcon, SmooveMarker, CarMarker, SmooveMarkersList, CarMarkersList} from '../utils/mapmarkers';
+import {setIcon, createMarkerList} from '../utils/mapmarkers';
+import { SmooveMarkersList, CarMarkersList } from './Markers';
 
 const center = L.bounds([1.56073, 104.11475], [1.16, 103.502]).getCenter();
 
@@ -31,10 +32,13 @@ export default class Basemap extends Component {
             contentType: 'application/json; charset=utf-8'
         }).then((locData) => {
             for (let loc of locData) {
-                let tmpMarker = [
-                    {key: loc.id, position: [Number(loc.latitude), Number(loc.longitude)], icon: smooveIcon, shortName: loc.parking_shortname, id: loc.id, description: loc.description}
-                ];
-                smooveMarkers.push(...tmpMarker);
+                if (loc.deleted === 1) {
+                    // pass props into markerlist
+                    createMarkerList(smooveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
+                } else {
+                    // pass props into markerlist
+                    createMarkerList(smooveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker-fade.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description});
+                }
             }
             // Persist location data for use in next ajax call
             this.setState({
@@ -47,17 +51,15 @@ export default class Basemap extends Component {
                 type: 'get',
                 contentType: 'application/json; charset=utf-8'
             });
-        }).then((bookings) => {
-            for (let booking of bookings.slice(0, 50)) {
+        }).then((bookingsData) => {
+            for (let booking of bookingsData.slice(0, 50)) {
                 // convert start and end location id to latlng TODO: tie to timing
                 try {
                     booking.start_location = findLoc(this.state.locData, booking.start_location);
                     booking.end_location = findLoc(this.state.locData, booking.end_location)
                     // TODO: animate car movement to end_location
-                    let tmpMarker = [
-                        {key: booking.id, position: [Number(booking.start_location[1]), Number(booking.start_location[0])], icon: carIcon, car: booking.car, id: booking.id}
-                    ];
-                    carMarkers.push(...tmpMarker);
+                    // pass props into markerlist
+                    createMarkerList(carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[1]), Number(booking.start_location[0])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id});
                 } catch (err) {
                     // location doesn't exist
                 }
