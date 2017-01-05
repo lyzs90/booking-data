@@ -37,6 +37,9 @@ export default class Timer extends Component {
                     dayID: this.state.dayID + 1,
                     day: days[this.state.dayID]
                 });
+            } else if (this.state.hours === '18') {
+                // change to night map at 6pm
+                this.props.changeMap('http://maps-{s}.onemap.sg/v2/Night/{z}/{x}/{y}.png');
             } else if (this.state.mins === '45') {
                 this.setState({
                     mins: '00',

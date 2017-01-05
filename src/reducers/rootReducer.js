@@ -9,7 +9,7 @@ const { DAY_MAP } = MapTypes;
  * NEVER: mutate arguments, perform side effects eg. API calls and routing transitions, or call non-pure functions eg. Date.now() or Math.random()
  */
 
-const changeMap = (state = DAY_MAP, action) => {
+const mapType = (state = DAY_MAP, action) => {
     switch (action.type) {
         case CHANGE_MAP:
             return action.mapType
@@ -19,7 +19,7 @@ const changeMap = (state = DAY_MAP, action) => {
 }
 
 const rootReducer = combineReducers({
-    changeMap
+    mapType
 })
 
 export default rootReducer;

@@ -5,14 +5,15 @@ import L from 'leaflet';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import {ajax, findLoc} from '../utils/api';
 import {setIcon, createMarkerList} from '../utils/mapmarkers';
-import { SmooveMarkerList, CarMarkerList } from '../components/MarkerList';
+import { SmooveMarkerList, CarMarkerList } from './MarkerList';
 
 const center = L.bounds([1.56073, 104.11475], [1.16, 103.502]).getCenter();
 
 export default class Basemap extends Component {
-    constructor () {
+    constructor (props) {
         super();
         this.state = {
+            mapType: props.mapType,
             smooveMarkers: [],
             carMarkers: [],
             locData: []
@@ -78,7 +79,7 @@ export default class Basemap extends Component {
         return (
             <Map center={[center.x, center.y]} zoom={12} maxBounds={[[1.56073, 104.11475], [1.16, 103.502]]}>
                 <TileLayer
-                    url='https://maps-{s}.onemap.sg/v3/Default/{z}/{x}/{y}.png'
+                    url={this.props.mapType}
                     detectRetina='true'
                     attribution='<img src="https://docs.onemap.sg/maps/images/oneMap64-01.png" style="height:20px;width:20px;"/> Map data © contributors, <a href="http://SLA.gov.sg">Singapore Land Authority</a>'
                     maxZoom='18'
