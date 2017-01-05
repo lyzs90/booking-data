@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Timer from '../components/Timer';
 import Basemap from '../components/Basemap';
+import MotionMenu from '../components/MotionMenu';
 
 import { connect } from 'react-redux'
 import { changeMap } from '../actions/changeMap';
@@ -33,7 +34,8 @@ class App extends Component {
     render () {
         // will pass down store data and dispatch components to children
         return (
-            <div>
+            <div id="flexdiv">
+                <MotionMenu />
                 <Timer changeMap={this.props.changeMap} />
                 <Basemap mapType={this.props.mapType} />
             </div>

@@ -61,7 +61,7 @@ export default class Timer extends Component {
 
     render () {
         return (
-            <div>
+            <div id="timer">
                 <h1>Visualising a week's worth of booking data...</h1>
                 <h3>{this.state.day}, {this.state.hours}:{this.state.mins}</h3>
             </div>
