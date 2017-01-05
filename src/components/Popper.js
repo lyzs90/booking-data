@@ -10,8 +10,8 @@ const SmoovePopper = ({ shortName, id, description, deleted }) => {
             <h3>{shortName}</h3>
             <p>
                 <b>Id:</b> {id}<br />
-                <b>Description:</b> {description}<br />
-                <b>Deleted:</b> {deleted}
+                <b>Deleted:</b> {deleted}<br />
+                <b>Description:</b> {description}
             </p>
         </div>
     )
