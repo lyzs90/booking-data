@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import {ajax, findLoc} from '../utils/api';
-import {setIcon, addToMarkerList} from '../utils/mapmarkers';
+import { ajax, findLoc } from '../utils/api';
+import { setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
 import { SmooveMarkerList, CarMarkerList } from './MarkerList';
 
 const center = L.bounds([1.56073, 104.11475], [1.16, 103.502]).getCenter();
@@ -43,8 +43,7 @@ export default class Basemap extends Component {
             }
             // Persist location data for use in next ajax call
             this.setState({
-                locData: locData,
-                smooveMarkers: this.state.smooveMarkers
+                locData: locData
             });
 
             return ajax({  // Add cars
@@ -64,17 +63,20 @@ export default class Basemap extends Component {
                         booking.end_location = findLoc(this.state.locData, booking.end_location)
 
                         // pass props into markerlist
-                        addToMarkerList(this.state.carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[1]), Number(booking.start_location[0])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id});
+                        addToMarkerList(this.state.carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[1]), Number(booking.start_location[0])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id, end: booking.end});
                     } catch (err) {
-                        // location doesn't exist
+                        // Location ID does not exist
                     }
                 }
             }
         })
         .then(() => {
+            // iterate through existing car marker list and remove those whose bookings ended
+            deleteFromMarkerList(this.state.carMarkers, this.state.timeID);
+        })
+        .then(() => {
             this.setState({
-                timeID: this.props.timeID,
-                carMarkers: this.state.carMarkers
+                timeID: this.props.timeID
             });
         })
         .catch((error) => {

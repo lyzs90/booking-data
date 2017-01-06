@@ -16,4 +16,11 @@ const addToMarkerList = (markerList, markerObject) => {
     return markerList.push(...tmpMarker);
 }
 
-module.exports = {setIcon, addToMarkerList};
+const deleteFromMarkerList = (markerList, time) => {
+    const tmpList = new Set([markerList]);
+    return markerList.filter((marker) => {
+        return Number(marker.end) !== Number(time);
+    });
+}
+
+module.exports = {setIcon, addToMarkerList, deleteFromMarkerList};
