@@ -8,14 +8,14 @@ const { DAY_MAP, NIGHT_MAP } = MapTypes;
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export default class Timer extends Component {
-    constructor () {
+    constructor (props) {
         super();
         this.state = {
             day: 'Sunday',
             dayID: 1,
             hours: '06',
             mins: '00',
-            timeID: 1,
+            timeID: props.timeID,
             countdownID: ''
         };
     }
@@ -51,7 +51,7 @@ export default class Timer extends Component {
                 // increment by 15mins
                 this.setState({
                     mins: timeToString(tempMins + 15),
-                    timeID: this.state.timeID + 1
+                    timeID: this.props.updateTimer(this.state.timeID)
                 });
             }
         }, 1000)

@@ -2,6 +2,8 @@
 
 import { combineReducers } from 'redux';
 import { CHANGE_MAP, MapTypes } from '../actions/changeMap';
+import { INCREMENT } from '../actions/updateTimer';
+
 const { DAY_MAP } = MapTypes;
 
 /*
@@ -18,8 +20,18 @@ const mapType = (state = DAY_MAP, action) => {
     }
 }
 
+const timeID = (state = 0, action) => {
+    switch (action.type) {
+        case 'INCREMENT':
+            return state + 1;
+        default:
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
-    mapType
+    mapType,
+    timeID
 })
 
 export default rootReducer;
