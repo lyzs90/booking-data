@@ -11,9 +11,9 @@ const setIcon = (iconUrl) => {
     });
 }
 
-const createMarkerList = (markerList, markerObject) => {
+const addToMarkerList = (markerList, markerObject) => {
     let tmpMarker = [markerObject];
     return markerList.push(...tmpMarker);
 }
 
-module.exports = {setIcon, createMarkerList};
+module.exports = {setIcon, addToMarkerList};
