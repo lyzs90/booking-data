@@ -40,7 +40,6 @@
     "jquery": "^3.1.1",
     "leaflet": "^1.0.2",
     "react": "^15.4.1",
-    "react-dazzle": "^1.2.4",
     "react-dom": "^15.4.1",
     "react-leaflet": "^1.0.2",
     "react-redux": "^5.0.1",

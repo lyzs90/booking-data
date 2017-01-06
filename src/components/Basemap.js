@@ -86,17 +86,24 @@ export default class Basemap extends Component {
 
     render () {
         return (
-            <Map center={[center.x, center.y]} zoom={12} maxBounds={[[1.56073, 104.11475], [1.16, 103.502]]}>
-                <TileLayer
-                    url={this.props.mapType}
-                    detectRetina='true'
-                    attribution='<img src="https://docs.onemap.sg/maps/images/oneMap64-01.png" style="height:20px;width:20px;"/> Map data © contributors, <a href="http://SLA.gov.sg">Singapore Land Authority</a>'
-                    maxZoom='18'
-                    minZoom='11'
-                />
-                <SmooveMarkerList markers={this.state.smooveMarkers} />
-                <CarMarkerList markers={this.state.carMarkers} />
-            </Map>
+            <div id="basemap">
+                <div id="infocards">
+                    <span className="kpi">{this.state.carMarkers.length} Cars Rented</span>
+                    <span className="fact">Average Booking 5.5 Hours</span>
+                </div>
+                <Map center={[center.x, center.y]} zoom={12} maxBounds={[[1.56073, 104.11475], [1.16, 103.502]]}>
+                    <TileLayer
+                        url={this.props.mapType}
+                        detectRetina='true'
+                        attribution='<img src="https://docs.onemap.sg/maps/images/oneMap64-01.png" style="height:20px;width:20px;"/> Map data © contributors, <a href="http://SLA.gov.sg">Singapore Land Authority</a>'
+                        maxZoom='18'
+                        minZoom='11'
+                    />
+                    <SmooveMarkerList markers={this.state.smooveMarkers} />
+                    <CarMarkerList markers={this.state.carMarkers} />
+                </Map>
+            </div>
+
         );
     }
 }

@@ -5,6 +5,8 @@ $breakpoints: (phone: 640px,
                tablet: 768px,
                desktop: 1024px) !default;
 
+$primary: #777;
+
 #flexdiv {
     font-family: 'Lato', sans-serif;
     display: flex;
@@ -17,8 +19,9 @@ $breakpoints: (phone: 640px,
         padding-left: 20px;
         padding-right: 20px;
         h1 {
+            margin-top: 5px;
             font-size: 32px;
-            color: #777;
+            color: $primary;
             @include media("<tablet") {
                 font-size: 24px;
             }
@@ -27,12 +30,33 @@ $breakpoints: (phone: 640px,
             margin: 0 auto;
         }
     }
-    .leaflet-container {
-        margin-top: 25px;
-        height: 500px;
-        max-height: 500px;
-        div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper > div {
-            font-family: 'Lato', sans-serif;
+    #basemap {
+        margin-top: 10px;
+        text-align: center;
+        #infocards {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            span {
+                font-size: 22px;
+                padding: 20px;
+                border-radius: 15px;
+                margin-left: 10px;
+            }
+            span.kpi {
+                background-color: lighten($primary, 40%);
+            }
+            span.fact {
+                background-color: lighten($primary, 20%);
+            }
+        }
+        .leaflet-container {
+            margin-top: 20px;
+            height: 475px;
+            max-height: 475px;
+            div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper > div {
+                font-family: 'Lato', sans-serif;
+            }
         }
     }
 }
