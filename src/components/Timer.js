@@ -27,8 +27,11 @@ export default class Timer extends Component {
             let tempMins = this.state.mins * 1;
 
             if (this.state.dayID === 6 && this.state.hours === '23' && this.state.mins === '45') {
+                // stop timer
+                clearInterval(this.state.countdownID);
                 this.setState({
                     hours: '00',
+                    mins: '00',
                     dayID: 0,
                     day: days[this.state.dayID]
                 });
