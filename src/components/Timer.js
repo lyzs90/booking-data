@@ -21,7 +21,6 @@ export default class Timer extends Component {
     }
 
     componentDidMount () {
-        console.log('Timer Did Mount.');
         let count = setInterval(() => {
             // calculate the hours and mins from bigTime
             let tempHours = this.state.hours * 1;
@@ -39,9 +38,6 @@ export default class Timer extends Component {
                     dayID: this.state.dayID + 1,
                     day: days[this.state.dayID]
                 });
-            } else if (this.state.hours === '18') {
-                // change to night map at 6pm
-                this.props.changeMap(NIGHT_MAP);
             } else if (this.state.mins === '45') {
                 this.setState({
                     mins: '00',
@@ -59,6 +55,16 @@ export default class Timer extends Component {
         this.setState({
             countdownID: count
         });
+    }
+
+    componentWillReceiveProps (nextProps) {
+        if (this.state.hours === '18') {
+            // change to night map at 6pm
+            this.props.changeMap(NIGHT_MAP);
+        } else if (this.state.hours === '06') {
+            // change to day map at 6am
+            this.props.changeMap(DAY_MAP);
+        }
     }
 
     render () {

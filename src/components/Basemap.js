@@ -22,22 +22,21 @@ export default class Basemap extends Component {
     }
 
     componentDidMount () {
-        console.log('Basemap Did Mount.');
     }
 
     componentWillReceiveProps (nextProps) {
-        console.log('Component Will Receive Props.');
-
         ajax({  // Add parking locations
             url: 'http://localhost:8080/locations',
             type: 'get',
             contentType: 'application/json; charset=utf-8'
-        }).then((locData) => {
+        })
+        .then((locData) => {
             for (let loc of locData) {
-                if (loc.deleted === 1) {
+                // prevent buildup of smoovemarkers
+                if (loc.deleted === 1 && this.state.smooveMarkers.length < locData.length) {
                     // pass props into markerlist
                     addToMarkerList(this.state.smooveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker-fade.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
-                } else {
+                } else if (loc.deleted === 0 && this.state.smooveMarkers.length < locData.length) {
                     // pass props into markerlist
                     addToMarkerList(this.state.smooveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
                 }
@@ -54,11 +53,13 @@ export default class Basemap extends Component {
                 data: { start: this.state.timeID },
                 contentType: 'application/json; charset=utf-8'
             });
-        }).then((bookingsData) => {
+        })
+        .then((bookingsData) => {
             for (let booking of bookingsData) {
-                // convert start and end location id to latlng
+                // spawn car markers when booking starts
                 if (booking.start === this.state.timeID) {
                     try {
+                        // convert start and end location id to latlng
                         booking.start_location = findLoc(this.state.locData, booking.start_location);
                         booking.end_location = findLoc(this.state.locData, booking.end_location)
 
@@ -69,13 +70,14 @@ export default class Basemap extends Component {
                     }
                 }
             }
-        }).then(() => {
+        })
+        .then(() => {
             this.setState({
                 timeID: this.props.timeID,
                 carMarkers: this.state.carMarkers
             });
-        }
-        ).catch((error) => {
+        })
+        .catch((error) => {
             throw error;
         });
     }
