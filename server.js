@@ -30,6 +30,19 @@ server.get('/bookings', (req, res, next) => {
     next();
 });
 
+// single booking query
+server.get('/booking/:start', (req, res, next) => {
+    let results = [];
+    for (let booking of bookings) {
+        if (booking.start === Number(req.query.start)) {
+            results.push(booking);
+        }
+    }
+    console.log(results);
+    res.send(results);
+    next();
+});
+
 server.listen(8080, () => {
     console.log(`${server.name} listening at ${server.url}`);
 });

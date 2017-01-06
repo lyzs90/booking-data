@@ -14,6 +14,7 @@ export default class Basemap extends Component {
         super();
         this.state = {
             mapType: props.mapType,
+            timeID: props.timeID,
             smooveMarkers: [],
             carMarkers: [],
             locData: []
@@ -22,7 +23,10 @@ export default class Basemap extends Component {
 
     componentDidMount () {
         console.log('Basemap Did Mount.');
+    }
 
+    componentWillReceiveProps (nextProps) {
+        console.log('Component Will Receive Props.');
         let smooveMarkers = [];
         let carMarkers = [];
         let model = {};
@@ -48,25 +52,29 @@ export default class Basemap extends Component {
             });
 
             return ajax({  // Add cars
-                url: 'http://localhost:8080/bookings',
+                url: 'http://localhost:8080/booking/',
                 type: 'get',
+                data: { start: this.state.timeID },
                 contentType: 'application/json; charset=utf-8'
             });
         }).then((bookingsData) => {
-            for (let booking of bookingsData.slice(0, 50)) {
-                // convert start and end location id to latlng TODO: tie to timing
-                try {
-                    booking.start_location = findLoc(this.state.locData, booking.start_location);
-                    booking.end_location = findLoc(this.state.locData, booking.end_location)
-                    // TODO: animate car movement to end_location
-                    // pass props into markerlist
-                    createMarkerList(carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[1]), Number(booking.start_location[0])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id});
-                } catch (err) {
-                    // location doesn't exist
+            for (let booking of bookingsData) {
+                // convert start and end location id to latlng
+                if (booking.start === this.state.timeID) {
+                    try {
+                        booking.start_location = findLoc(this.state.locData, booking.start_location);
+                        booking.end_location = findLoc(this.state.locData, booking.end_location)
+
+                        // pass props into markerlist
+                        createMarkerList(carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[1]), Number(booking.start_location[0])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id});
+                    } catch (err) {
+                        // location doesn't exist
+                    }
                 }
             }
         }).then(() => {
             this.setState({
+                timeID: this.props.timeID,
                 carMarkers: carMarkers
             });
         }

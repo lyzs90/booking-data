@@ -42,7 +42,7 @@ class App extends Component {
         return (
             <div id="flexdiv">
                 <Timer changeMap={this.props.changeMap} timeID={this.props.timeID} updateTimer={this.props.updateTimer} />
-                <Basemap mapType={this.props.mapType} />
+                <Basemap mapType={this.props.mapType} timeID={this.props.timeID} />
             </div>
         )
     }
