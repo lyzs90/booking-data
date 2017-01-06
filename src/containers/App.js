@@ -5,7 +5,7 @@ import Timer from '../components/Timer';
 import Basemap from '../components/Basemap';
 
 import { connect } from 'react-redux'
-import { changeMap } from '../actions/changeMap';
+import { changeMap, MapTypes } from '../actions/changeMap';
 
 // use connect method if 'smart' components need to listen to the store
 const mapStateToProps = (state) => {
@@ -32,6 +32,8 @@ class App extends Component {
 
     render () {
         // will pass down store data and dispatch components to children
+        // pass changeMap method as props to timer
+        // pass initial mapType as props to basemap
         return (
             <div id="flexdiv">
                 <Timer changeMap={this.props.changeMap} />

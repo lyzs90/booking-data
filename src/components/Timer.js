@@ -1,8 +1,10 @@
 'use strict';
 
 import React, { Component } from 'react';
+import { MapTypes } from '../actions/changeMap';
 import timeToString from '../utils/timeToString';
 
+const { DAY_MAP, NIGHT_MAP } = MapTypes;
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export default class Timer extends Component {
@@ -39,7 +41,7 @@ export default class Timer extends Component {
                 });
             } else if (this.state.hours === '18') {
                 // change to night map at 6pm
-                this.props.changeMap('http://maps-{s}.onemap.sg/v2/Night/{z}/{x}/{y}.png');
+                this.props.changeMap(NIGHT_MAP);
             } else if (this.state.mins === '45') {
                 this.setState({
                     mins: '00',
