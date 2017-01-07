@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 
-const SmoovePopper = ({ shortName, id, description, deleted }) => {
+export const SmoovePopper = ({ shortName, id, description, deleted }) => {
     return (
         <div id ="smoovePopper">
             <h3>{shortName}</h3>
@@ -15,7 +15,7 @@ const SmoovePopper = ({ shortName, id, description, deleted }) => {
     )
 }
 
-const CarPopper = ({ car, id }) => {
+export const CarPopper = ({ car, id }) => {
     return (
         <div id = "carPopper">
             <h3>Car {car}</h3>
@@ -25,5 +25,3 @@ const CarPopper = ({ car, id }) => {
         </div>
     )
 }
-
-module.exports = {SmoovePopper, CarPopper};

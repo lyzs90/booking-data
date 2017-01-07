@@ -5,7 +5,7 @@ import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { SmoovePopper, CarPopper } from './Popper';
 
 // pass remaining props into popper
-const SmooveMarker = ({ map, position, icon, ...props }) => (
+export const SmooveMarker = ({ map, position, icon, ...props }) => (
     <Marker map={map} position={position} icon={icon}>
         <Popup>
             <SmoovePopper {...props} />
@@ -14,12 +14,10 @@ const SmooveMarker = ({ map, position, icon, ...props }) => (
 )
 
 // pass remaining props into popper
-const CarMarker = ({ map, position, icon, ...props }) => (
+export const CarMarker = ({ map, position, icon, ...props }) => (
     <Marker map={map} position={position} icon={icon}>
         <Popup>
             <CarPopper {...props} />
         </Popup>
     </Marker>
 )
-
-module.exports = {SmooveMarker, CarMarker};

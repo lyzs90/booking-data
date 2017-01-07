@@ -6,6 +6,7 @@ import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { ajax, findLoc } from '../utils/api';
 import { setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
 import { SmooveMarkerList, CarMarkerList } from './MarkerList';
+import { Dashboard } from './Dashboard';
 
 const center = L.bounds([1.56073, 104.11475], [1.16, 103.502]).getCenter();
 
@@ -84,10 +85,7 @@ export default class Basemap extends Component {
     render () {
         return (
             <div id="basemap">
-                <div id="infocards">
-                    <span className="kpi">{this.state.carMarkers.length} Cars Rented</span>
-                    <span className="fact">Average Booking 5.5 Hours</span>
-                </div>
+                <Dashboard carMarkers = {this.state.carMarkers} />
                 <Map center={[center.x, center.y]} zoom={12} maxBounds={[[1.56073, 104.11475], [1.16, 103.502]]}>
                     <TileLayer
                         url={this.props.mapType}
