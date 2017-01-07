@@ -61,7 +61,7 @@ export default class Basemap extends Component {
                         booking.end_location = findLoc(this.state.locData, booking.end_location)
 
                         // pass props into markerlist
-                        addToMarkerList(this.state.carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[1]), Number(booking.start_location[0])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id, end: booking.end});
+                        return addToMarkerList(this.state.carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[1]), Number(booking.start_location[0])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id, start: booking.start, end: booking.end});
                     } catch (err) {
                         // Location ID does not exist
                     }
@@ -70,11 +70,12 @@ export default class Basemap extends Component {
         })
         .then(() => {
             // iterate through existing car marker list and remove those whose bookings ended
-            deleteFromMarkerList(this.state.carMarkers, this.state.timeID);
+            return deleteFromMarkerList(this.state.carMarkers, this.state.timeID);
         })
-        .then(() => {
+        .then((carMarkers) => {
             this.setState({
-                timeID: this.props.timeID
+                timeID: this.props.timeID,
+                carMarkers: carMarkers
             });
         })
         .catch((error) => {
