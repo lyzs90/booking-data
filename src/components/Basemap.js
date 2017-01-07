@@ -21,9 +21,6 @@ export default class Basemap extends Component {
         };
     }
 
-    componentDidMount () {
-    }
-
     componentWillReceiveProps (nextProps) {
         ajax({  // Add parking locations
             url: 'http://localhost:8080/locations',

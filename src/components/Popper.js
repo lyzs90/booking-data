@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 
-// Define poppers as stateless functional components
-
 const SmoovePopper = ({ shortName, id, description, deleted }) => {
     return (
         <div id ="smoovePopper">

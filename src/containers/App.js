@@ -27,25 +27,13 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-class App extends Component {
-    componentDidMount () {
-        // now has access to data from store i.e. this.props.mapType
-        // and access to dispatch actions i.e. this.props.changeMap
-        console.log(this.props.mapType);
-        console.log(this.props.timeID);
-        console.log(this.props.changeMap);
-        console.log(this.props.updateTimer);
-    }
-
-    render () {
-        // will pass down store data and dispatch components to children
-        return (
-            <div id="flexdiv">
-                <Timer changeMap={this.props.changeMap} timeID={this.props.timeID} updateTimer={this.props.updateTimer} />
-                <Basemap mapType={this.props.mapType} timeID={this.props.timeID} />
-            </div>
-        )
-    }
+const App = ({ changeMap, updateTimer, mapType, timeID }) => {
+    return (
+        <div id="flexdiv">
+            <Timer changeMap={changeMap} timeID={timeID} updateTimer={updateTimer} />
+            <Basemap mapType={mapType} timeID={timeID} />
+        </div>
+    )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
