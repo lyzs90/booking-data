@@ -86,7 +86,7 @@ export default class Basemap extends Component {
     render () {
         return (
             <div id="basemap">
-                <Dashboard carMarkers = {this.state.carMarkers} />
+                <Dashboard carMarkers={this.state.carMarkers} timeID={this.state.timeID} />
                 <Map center={[center.x, center.y]} zoom={12} maxBounds={[[1.56073, 104.11475], [1.16, 103.502]]}>
                     <TileLayer
                         url={this.props.mapType}

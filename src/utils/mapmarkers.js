@@ -2,7 +2,7 @@
 
 import L from 'leaflet';
 
-const setIcon = (iconUrl) => {
+export const setIcon = (iconUrl) => {
     return L.icon({
         iconUrl: iconUrl,
         iconSize: [50, 50], // size of the icon
@@ -11,16 +11,14 @@ const setIcon = (iconUrl) => {
     });
 }
 
-const addToMarkerList = (markerList, markerObject) => {
+export const addToMarkerList = (markerList, markerObject) => {
     let tmpMarker = [markerObject];
     return markerList.push(...tmpMarker);
 }
 
-const deleteFromMarkerList = (markerList, time) => {
+export const deleteFromMarkerList = (markerList, time) => {
     const tmpList = new Set([markerList]);
     return markerList.filter((marker) => {
         return Number(marker.end) !== Number(time);
     });
 }
-
-module.exports = {setIcon, addToMarkerList, deleteFromMarkerList};
