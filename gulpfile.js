@@ -65,8 +65,8 @@ gulp.task('browser-sync', ['sass', 'js', 'vendor'], function () {
     });
 
     gulp.watch('./*.html').on('change', browserSync.reload);
-    gulp.watch('./src/scss/**/*.scss', ['sass']).on('change', browserSync.reload);
-    gulp.watch('./src/**/*.js', ['js']).on('change', browserSync.reload);
+    gulp.watch('./src/scss/**/*.scss', ['sass']);
+    gulp.watch('./src/**/*.js', ['js']);
 });
 
 gulp.task('default', ['browser-sync']);
