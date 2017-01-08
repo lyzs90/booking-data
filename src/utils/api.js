@@ -10,5 +10,5 @@ export const ajax = (options) => {
 
 export const findLoc = (locData, locId) => {
     let elem = locData.find(x => x.id === locId);
-    return [elem.longitude, elem.latitude];
+    return [elem.latitude, elem.longitude];
 }

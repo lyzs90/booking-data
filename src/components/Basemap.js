@@ -2,10 +2,11 @@
 
 import React, { Component } from 'react';
 import L from 'leaflet';
-import { Map, Polyline, TileLayer } from 'react-leaflet';
+import { Map, TileLayer } from 'react-leaflet';
 import { ajax, findLoc } from '../utils/api';
 import { setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
 import { SmooveMarkerList, CarMarkerList } from './MarkerList';
+import { PolylineList } from './PolylineList'
 import { Dashboard } from './Dashboard';
 
 const center = L.bounds([1.56073, 104.11475], [1.16, 103.502]).getCenter();
@@ -67,8 +68,19 @@ export default class Basemap extends Component {
                         booking.start_location = findLoc(this.state.locData, booking.start_location);
                         booking.end_location = findLoc(this.state.locData, booking.end_location)
 
+                        // draw polyline if start location =/= end location
+                        if (JSON.stringify(booking.start_location) !== JSON.stringify(booking.end_location)) {
+                            let tmpPolyline = [
+                                booking.start_location,
+                                booking.end_location
+                            ];
+                            this.setState({
+                                polyLineList: this.state.polyLineList.concat([tmpPolyline])
+                            })
+                        }
+
                         // pass props into markerlist
-                        return addToMarkerList(this.state.carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[1]), Number(booking.start_location[0])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id, start: booking.start, end: booking.end});
+                        return addToMarkerList(this.state.carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[0]), Number(booking.start_location[1])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id, start: booking.start, end: booking.end});
                     } catch (err) {
                         // Location ID does not exist
                     }
@@ -104,7 +116,7 @@ export default class Basemap extends Component {
                     />
                     <SmooveMarkerList markers={this.state.smooveMarkers} />
                     <CarMarkerList markers={this.state.carMarkers} />
-                    <Polyline positions={this.state.polyLineList} />
+                    <PolylineList polylines={this.state.polyLineList} />
                 </Map>
             </div>
 
