@@ -1,18 +1,19 @@
 'use strict'
 
-import React, { Component } from 'react';
-import SimpleLineChart from './SimpleLineChart';
+import React from 'react';
+import UtilisationChart from './UtilisationChart';
 import { averageDuration } from '../utils/bookingStats';
 
-export const Dashboard = ({ carMarkers, timeID }) => {
+export const Dashboard = ({ carMarkers, timeID, totalBookings }) => {
     return (
         <div id="dashboard">
             <div id="infocards">
-                <span className="kpi">{carMarkers.length} Cars In Use</span>
-                <span className="fact">Average Booking {averageDuration(carMarkers)} Hours</span>
+                <span className="kpi1">{totalBookings} Total Bookings</span>
+                <span className="kpi2">{carMarkers.length} Cars In Use</span>
+                <span className="kpi3">Average Booking {averageDuration(carMarkers)} Hours</span>
             </div>
             <div id="line-chart">
-                <SimpleLineChart usage={carMarkers.length} timeID={timeID} />
+                <UtilisationChart usage={carMarkers.length} timeID={timeID} />
             </div>
         </div>
     )

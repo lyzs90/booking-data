@@ -32,7 +32,7 @@ export default class Timer extends Component {
                 this.setState({
                     hours: '00',
                     mins: '00',
-                    dayID: 0,
+                    dayID: 1,
                     day: days[this.state.dayID]
                 });
             } else if (this.state.hours === '23' && this.state.mins === '45') {

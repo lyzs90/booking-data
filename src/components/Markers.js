@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import { SmoovePopper, CarPopper } from './Popper';
 
 // pass remaining props into popper

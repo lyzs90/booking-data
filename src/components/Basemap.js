@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import L from 'leaflet';
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Map, Polyline, TileLayer } from 'react-leaflet';
 import { ajax, findLoc } from '../utils/api';
 import { setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
 import { SmooveMarkerList, CarMarkerList } from './MarkerList';
@@ -18,7 +18,9 @@ export default class Basemap extends Component {
             timeID: props.timeID,
             smooveMarkers: [],
             carMarkers: [],
-            locData: []
+            locData: [],
+            totalBookings: 0,
+            polyLineList: []
         };
     }
 
@@ -52,6 +54,11 @@ export default class Basemap extends Component {
             });
         })
         .then((bookingsData) => {
+            // record no. of bookings
+            this.setState({
+                totalBookings: this.state.totalBookings + bookingsData.length
+            });
+
             for (let booking of bookingsData) {
                 // spawn car markers when booking starts
                 if (booking.start === this.state.timeID) {
@@ -86,7 +93,7 @@ export default class Basemap extends Component {
     render () {
         return (
             <div id="basemap">
-                <Dashboard carMarkers={this.state.carMarkers} timeID={this.state.timeID} />
+                <Dashboard carMarkers={this.state.carMarkers} timeID={this.state.timeID} totalBookings={this.state.totalBookings} />
                 <Map center={[center.x, center.y]} zoom={12} maxBounds={[[1.56073, 104.11475], [1.16, 103.502]]}>
                     <TileLayer
                         url={this.props.mapType}
@@ -97,6 +104,7 @@ export default class Basemap extends Component {
                     />
                     <SmooveMarkerList markers={this.state.smooveMarkers} />
                     <CarMarkerList markers={this.state.carMarkers} />
+                    <Polyline positions={this.state.polyLineList} />
                 </Map>
             </div>
 

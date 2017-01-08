@@ -7,6 +7,8 @@ const locations = require('./data/smoovelocations.json');
 console.log(`Loaded ${bookings.length} records.`);
 console.log(`Loaded ${locations.length} locations.`);
 
+// Mock API to retrieve bookings & locations data
+
 var server = restify.createServer();
 server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.CORS({
