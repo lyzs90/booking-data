@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { MapTypes } from '../actions/changeMap';
-import timeToString from '../utils/timeToString';
+import { timeToString } from '../utils/timeToString';
 
 const { DAY_MAP, NIGHT_MAP } = MapTypes;
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

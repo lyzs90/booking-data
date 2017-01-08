@@ -34,10 +34,19 @@ $primary: #777;
         margin-top: 10px;
         text-align: center;
         #dashboard {
+            @include media(">tablet") {
+                display: flex;
+                flex-direction: row;
+            }
             #infocards {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                @include media(">tablet") {
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 20%;
+                }
                 span {
                     font-size: 16px;
                     padding: 20px;
@@ -52,22 +61,31 @@ $primary: #777;
                     background-color: lighten($primary, 20%);
                 }
             }
-            #line-chart {
+            #line-chart {  // override default recharts styling
                 margin: 10px auto 0px;
-                width: 300px;
-            }
-        }
-        @include media(">tablet") {
-            #dashboard {
-                display: flex;
-                flex-direction: row;
-                #infocards {
-                    display: flex;
-                    flex-direction: column;
-                    margin-left: 25%;
-                }
-                #line-chart {
+                @include media(">tablet") {
                     margin: 10px 0px 0px 0px;
+                }
+                .recharts-wrapper {
+                    width: 300px !important;
+                    @include media(">=tablet") {
+                        margin: 0 auto;
+                        width: 500px !important;
+                    }
+                    .recharts-surface {
+                        display: block;
+                        margin: 0 auto;
+                        width: 300px !important;
+                        @include media(">=tablet") {
+                            width: 500px !important;
+                        }
+                        .recharts-text {
+                            font-size: 10px;
+                        }
+                    }
+                    .recharts-legend-wrapper {
+                        width: 300px !important;
+                    }
                 }
             }
         }

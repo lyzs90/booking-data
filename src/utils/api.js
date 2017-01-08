@@ -2,15 +2,13 @@
 
 const $ = require('jquery');
 
-const ajax = (options) => {
+export const ajax = (options) => {
     return new Promise(function (resolve, reject) {
         $.ajax(options).done(resolve).fail(reject);
     });
 }
 
-const findLoc = (locData, locId) => {
+export const findLoc = (locData, locId) => {
     let elem = locData.find(x => x.id === locId);
     return [elem.longitude, elem.latitude];
 }
-
-module.exports = {ajax, findLoc};
