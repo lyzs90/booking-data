@@ -2,6 +2,8 @@
 
 Visualisation of one week's worth of Smoove's booking data.
 
+<img src="https://s30.postimg.org/69cc3mo4x/viz.png" width="360">
+
 ## Dataset
 
 A single booking consists of:
