@@ -2,7 +2,7 @@
 
 Visualisation of one week's worth of Smoove's booking data.
 
-<img src="https://s30.postimg.org/69cc3mo4x/viz.png" width="360">
+<img src="https://s30.postimg.org/69cc3mo4x/viz.png" width="800">
 
 ## Dataset
 
