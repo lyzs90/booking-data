@@ -20,4 +20,4 @@ There are 1486 bookings, on 141 cars, using 54 locations.
 ## Getting Started
 - Install packages: `npm install --dev`
 - Start restify server: `npm start`
-- Start browser-sync server: `gulp`
+- In a separate terminal, start browser-sync server: `gulp`
