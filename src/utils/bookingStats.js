@@ -1,5 +1,9 @@
 'use strict';
 
+const isEmpty = (array) => {
+    return array.length === 0;
+}
+
 const duration = (x) => {
     return (x.end - x.start) / 4;
 }
@@ -7,7 +11,7 @@ const duration = (x) => {
 const sum = (a, b) => a + b;
 
 export const averageDuration = (array) => {
-    if (array.length > 0) {
+    if (!isEmpty(array)) {
         return parseFloat(array.map(duration).reduce(sum) / array.length).toFixed(2);
     } else {
         return 0;
