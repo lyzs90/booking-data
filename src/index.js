@@ -16,7 +16,7 @@ import App from './containers/App';
  * - Handles unregistering of listeners via the function returned by subscribe(listener)
  */
 
-let store = createStore(rootReducer);
+let store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 render(
     <Provider store={store}>
