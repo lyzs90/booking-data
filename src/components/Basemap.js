@@ -32,21 +32,28 @@ export default class Basemap extends Component {
             contentType: 'application/json; charset=utf-8'
         })
         .then((locData) => {
-            for (let loc of locData) {
-                if (loc.deleted === 1) {
-                    // pass props into markerlist
-                    addToMarkerList(this.state.smoveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker-fade.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
-                } else if (loc.deleted === 0) {
-                    // pass props into markerlist
-                    addToMarkerList(this.state.smoveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
-                }
-            }
-            return locData;
+            const inactiveMarkers = locData
+                .filter((loc) => loc.deleted === 1)
+                .map((loc) => {
+                    return {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker-fade.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted}
+                });
+
+            const activeMarkers = locData
+                .filter((loc) => loc.deleted === 0)
+                .map((loc) => {
+                    return {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted}
+                });
+
+            return {
+                locData,
+                inactiveMarkers,
+                activeMarkers
+            };
         })
-        .then((locData) => {
-            // Persist location data for use in next ajax call
+        .then((results) => {
             this.setState({
-                locData: locData
+                locData: results.locData,  // Persist location data for use in next ajax call
+                smoveMarkers: [...results.inactiveMarkers, ...results.activeMarkers]
             });
         })
         .catch((error) => {
@@ -66,10 +73,12 @@ export default class Basemap extends Component {
             this.setState({
                 totalBookings: this.state.totalBookings + bookingsData.length
             });
-
-            for (let booking of bookingsData) {
-                // spawn car markers when booking starts
-                if (booking.start === this.state.timeID) {
+            return bookingsData;
+        })
+        .then((bookingsData) => {
+            const activeCars = bookingsData
+                .filter((booking) => booking.start === this.state.timeID)
+                .map((booking) => {
                     try {
                         // convert start and end location id to latlng
                         booking.start_location = findLoc(this.state.locData, booking.start_location);
@@ -87,12 +96,20 @@ export default class Basemap extends Component {
                         }
 
                         // pass props into markerlist
-                        return addToMarkerList(this.state.carMarkers, {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[0]), Number(booking.start_location[1])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id, start: booking.start, end: booking.end});
+                        return {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[0]), Number(booking.start_location[1])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id, start: booking.start, end: booking.end};
                     } catch (err) {
                         // Location ID does not exist
+                        return false;
                     }
-                }
-            }
+                })
+                .filter(Boolean)
+            console.log(activeCars)
+            return activeCars;
+        })
+        .then((activeCars) => {
+            this.setState({
+                carMarkers: this.state.carMarkers.concat(...activeCars)
+            })
         })
         .then(() => {
             // iterate through existing car marker list and remove those whose bookings ended
