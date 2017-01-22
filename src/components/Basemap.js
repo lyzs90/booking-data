@@ -33,11 +33,10 @@ export default class Basemap extends Component {
         })
         .then((locData) => {
             for (let loc of locData) {
-                // prevent buildup of smovemarkers
-                if (loc.deleted === 1 && this.state.smoveMarkers.length < locData.length) {
+                if (loc.deleted === 1) {
                     // pass props into markerlist
                     addToMarkerList(this.state.smoveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker-fade.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
-                } else if (loc.deleted === 0 && this.state.smoveMarkers.length < locData.length) {
+                } else if (loc.deleted === 0) {
                     // pass props into markerlist
                     addToMarkerList(this.state.smoveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
                 }
