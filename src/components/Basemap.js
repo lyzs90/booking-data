@@ -25,8 +25,8 @@ export default class Basemap extends Component {
         };
     }
 
-    componentWillReceiveProps (nextProps) {
-        ajax({  // Add parking locations
+    componentDidMount () {
+        ajax({ // Add parking locations
             url: 'http://localhost:8080/locations',
             type: 'get',
             contentType: 'application/json; charset=utf-8'
@@ -42,17 +42,25 @@ export default class Basemap extends Component {
                     addToMarkerList(this.state.smooveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
                 }
             }
+            return locData;
+        })
+        .then((locData) => {
             // Persist location data for use in next ajax call
             this.setState({
                 locData: locData
             });
+        })
+        .catch((error) => {
+            throw error;
+        });
+    }
 
-            return ajax({  // Add cars
-                url: 'http://localhost:8080/booking/',
-                type: 'get',
-                data: { start: this.state.timeID },
-                contentType: 'application/json; charset=utf-8'
-            });
+    componentWillReceiveProps (nextProps) {
+        ajax({  // Add cars
+            url: 'http://localhost:8080/booking/',
+            type: 'get',
+            data: { start: this.state.timeID },
+            contentType: 'application/json; charset=utf-8'
         })
         .then((bookingsData) => {
             // record no. of bookings
