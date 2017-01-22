@@ -18,7 +18,7 @@ export const Dashboard = ({ carMarkers, timeID, totalBookings }) => {
             <div id="desc">
                 <h3>Notes:</h3>
                 <p>
-                    Smoove's current and past rental locations are marked on the map below. The car markers spawn at the start of a booking and despawns when they are returned. The dashed polylines mark instances where the start and end locations of a booking are not the same.
+                    Smove's current and past rental locations are marked on the map below. The car markers spawn at the start of a booking and despawns when they are returned. The dashed polylines mark instances where the start and end locations of a booking are not the same.
                 </p>
             </div>
         </div>

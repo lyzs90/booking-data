@@ -2,7 +2,7 @@
 
 const restify = require('restify');
 const bookings = require('./data/bookingdata.json');
-const locations = require('./data/smoovelocations.json');
+const locations = require('./data/smovelocations.json');
 
 console.log(`Loaded ${bookings.length} records.`);
 console.log(`Loaded ${locations.length} locations.`);

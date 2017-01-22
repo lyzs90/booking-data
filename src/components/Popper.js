@@ -2,9 +2,9 @@
 
 import React from 'react';
 
-export const SmoovePopper = ({ shortName, id, description, deleted }) => {
+export const SmovePopper = ({ shortName, id, description, deleted }) => {
     return (
-        <div id ="smoovePopper">
+        <div id ="smovePopper">
             <h3>{shortName}</h3>
             <p>
                 <b>Id:</b> {id}<br />

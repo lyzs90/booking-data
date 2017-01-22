@@ -1,6 +1,6 @@
 # Booking Data Visualisation
 
-Visualisation of one week's worth of Smoove's booking data.
+Visualisation of one week's worth of Smove's booking data.
 
 <img src="https://s30.postimg.org/69cc3mo4x/viz.png" width="800">
 

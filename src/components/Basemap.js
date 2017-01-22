@@ -5,7 +5,7 @@ import L from 'leaflet';
 import { Map, TileLayer } from 'react-leaflet';
 import { ajax, findLoc } from '../utils/api';
 import { setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
-import { SmooveMarkerList, CarMarkerList } from './MarkerList';
+import { SmoveMarkerList, CarMarkerList } from './MarkerList';
 import { PolylineList } from './PolylineList'
 import { Dashboard } from './Dashboard';
 
@@ -17,7 +17,7 @@ export default class Basemap extends Component {
         this.state = {
             mapType: props.mapType,
             timeID: props.timeID,
-            smooveMarkers: [],
+            smoveMarkers: [],
             carMarkers: [],
             locData: [],
             totalBookings: 0,
@@ -33,13 +33,13 @@ export default class Basemap extends Component {
         })
         .then((locData) => {
             for (let loc of locData) {
-                // prevent buildup of smoovemarkers
-                if (loc.deleted === 1 && this.state.smooveMarkers.length < locData.length) {
+                // prevent buildup of smovemarkers
+                if (loc.deleted === 1 && this.state.smoveMarkers.length < locData.length) {
                     // pass props into markerlist
-                    addToMarkerList(this.state.smooveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker-fade.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
-                } else if (loc.deleted === 0 && this.state.smooveMarkers.length < locData.length) {
+                    addToMarkerList(this.state.smoveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker-fade.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
+                } else if (loc.deleted === 0 && this.state.smoveMarkers.length < locData.length) {
                     // pass props into markerlist
-                    addToMarkerList(this.state.smooveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
+                    addToMarkerList(this.state.smoveMarkers, {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted});
                 }
             }
             return locData;
@@ -122,7 +122,7 @@ export default class Basemap extends Component {
                         maxZoom='18'
                         minZoom='11'
                     />
-                    <SmooveMarkerList markers={this.state.smooveMarkers} />
+                    <SmoveMarkerList markers={this.state.smoveMarkers} />
                     <CarMarkerList markers={this.state.carMarkers} />
                     <PolylineList polylines={this.state.polyLineList} />
                 </Map>
