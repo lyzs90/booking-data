@@ -21,8 +21,8 @@ const mapDispatchToProps = (dispatch) => {
         changeMap: (mapType) => {
             dispatch(changeMap(mapType))
         },
-        updateTimer: (timeID) => {
-            dispatch(updateTimer(timeID))
+        updateTimer: () => {
+            dispatch(updateTimer())
         }
     }
 }

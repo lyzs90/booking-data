@@ -10,9 +10,8 @@ export const INCREMENT = 'INCREMENT';
  * action creators
  */
 
-export const updateTimer = (timeID) => {
+export const updateTimer = () => {
     return {
-        type: INCREMENT,
-        timeID
+        type: INCREMENT
     }
 }

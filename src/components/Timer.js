@@ -71,7 +71,7 @@ export default class Timer extends Component {
                 // increment by 15mins
                 this.setState({
                     mins: timeToString(tempMins + 15),
-                    timeID: this.props.updateTimer(this.state.timeID)
+                    timeID: this.props.updateTimer()
                 });
             }
         }, 1000)

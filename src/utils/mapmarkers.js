@@ -11,10 +11,6 @@ export const setIcon = (iconUrl) => {
     });
 }
 
-export const addToMarkerList = (markerList, markerObject) => {
-    let tmpMarker = [markerObject];
-    return markerList.push(...tmpMarker);
-}
 
 export const deleteFromMarkerList = (markerList, time) => {
     const tmpList = new Set([markerList]);

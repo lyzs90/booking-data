@@ -16,7 +16,7 @@ export default class UtilisationChart extends Component {
     componentWillReceiveProps (nextProps) {
         let tmpData = [{name: this.props.timeID, usage: Math.round(this.props.usage / totalCars * 100)}];
         this.setState({
-            data: this.state.data.concat(tmpData)
+            data: [...this.state.data, ...tmpData]
         })
     }
 

@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, TileLayer } from 'react-leaflet';
-import { ajax, findLoc } from '../utils/api';
+import { ajax, getLocations, getBookings, findLoc } from '../utils/api';
 import { setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
 import { SmoveMarkerList, CarMarkerList } from './MarkerList';
 import { PolylineList } from './PolylineList'
@@ -15,7 +15,6 @@ export default class Basemap extends Component {
     constructor (props) {
         super();
         this.state = {
-            mapType: props.mapType,
             timeID: props.timeID,
             smoveMarkers: [],
             carMarkers: [],
@@ -26,11 +25,7 @@ export default class Basemap extends Component {
     }
 
     componentDidMount () {
-        ajax({ // Add parking locations
-            url: 'http://localhost:8080/locations',
-            type: 'get',
-            contentType: 'application/json; charset=utf-8'
-        })
+        getLocations()
         .then((locData) => {
             const inactiveMarkers = locData
                 .filter((loc) => loc.deleted === 1)
@@ -62,12 +57,7 @@ export default class Basemap extends Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        ajax({  // Add cars
-            url: 'http://localhost:8080/booking/',
-            type: 'get',
-            data: { start: this.state.timeID },
-            contentType: 'application/json; charset=utf-8'
-        })
+        getBookings(this.state.timeID)
         .then((bookingsData) => {
             // record no. of bookings
             this.setState({
@@ -108,7 +98,7 @@ export default class Basemap extends Component {
         })
         .then((activeCars) => {
             this.setState({
-                carMarkers: this.state.carMarkers.concat(...activeCars)
+                carMarkers: [...this.state.carMarkers, ...activeCars]
             })
         })
         .then(() => {
