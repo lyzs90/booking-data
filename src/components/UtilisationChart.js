@@ -29,7 +29,7 @@ export default class UtilisationChart extends Component {
                <CartesianGrid strokeDasharray="3 3" />
                <Tooltip />
                <Legend />
-               <Area name="Fleet Utilisation (%)" type="monotone" dataKey="usage" stroke="#8884d8" fill="#8884d8" activeDot={{r: 8}} />
+               <Area name="Fleet Utilisation (%)" type="monotone" dataKey="usage" stroke="#60c4d3" fill="#60c4d3" activeDot={{r: 8}} />
             </AreaChart>
         )
     }

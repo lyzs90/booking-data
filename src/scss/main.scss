@@ -5,12 +5,48 @@ $breakpoints: (phone: 640px,
                tablet: 768px,
                desktop: 1024px) !default;
 
-$primary: #999999;
-$lightPrimary: lighten($primary, 35%);
-$darkPrimary: darken($primary, 30%);
-$accent1: #22b5bf;
-$accent2: #1281ca;
-$accent3: rgb(255, 187, 40);
+$primary: #1f2439;
+$lightPrimary: #3f4c5b;
+$darkPrimary: darken($primary, 4%);
+$secondary: #14adc4;
+$lightSecondary: #60c4d3;
+$darkSecondary: #14869d;
+$primaryText: #f1f3f3;
+$secondaryText: #98b3bb;
+$accent: #37bf5b;
+
+body {
+    background-color: $primary;
+}
+
+.sidebar {
+    @include media("<desktop") {
+        .fa {
+            display: none;
+        }
+    }
+    @include media(">tablet") {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 65px;
+        height: 100%;
+        background: $darkPrimary;
+        -webkit-box-shadow: 2px 0px 5px -2px $darkPrimary;
+        &__button {
+            transition: all 0.5s ease;
+            text-align: center;
+            padding: 5px 0;
+            background-color: $accent;
+        }
+        &__button:hover {
+            opacity: 0.5;
+        }
+        .link--active {
+            color: $primaryText;
+        }
+    }
+}
 
 .container {
     font-family: 'Lato', sans-serif;
@@ -21,27 +57,42 @@ $accent3: rgb(255, 187, 40);
 .timer {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    padding-left: 20px;
-    padding-right: 20px;
-    h1 {
-        margin-top: 5px;
-        font-size: 24px;
-        color: $primary;
-        @include media(">tablet") {
-            font-size: 32px;
-        }
+    &__info {
+        text-align: center;
+        padding: 5px 15px;
+        border-radius: 5px;
+        color: $secondaryText;
+        background-color: $lightPrimary;
+        font-size: 14px;
     }
-    h3 {
-        margin: 0 auto;
-        color: $darkPrimary;
+    &__clock {
+        color: $secondaryText;
+    }
+    @include media(">tablet") {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-end;
+        padding-left: 20px;
+        padding-right: 20px;
+        &__info {
+            margin-left: 14%;
+            margin-right: 10%;
+            padding: 0 15px;
+            font-size: 14px;
+        }
+        &__clock {
+        }
     }
 }
 
 .basemap {
-    margin-top: 10px;
-    text-align: center;
+    @include media(">tablet") {
+        margin-top: 2%;
+        margin-left: 5%;
+        text-align: center;
+    }
 }
 
 .dashboard {
@@ -51,11 +102,13 @@ $accent3: rgb(255, 187, 40);
     }
     &__deck {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         @include media(">tablet") {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
             margin-left: 5%;
         }
     }
@@ -65,31 +118,36 @@ $accent3: rgb(255, 187, 40);
             margin: 10px 0px 0px 0px;
         }
     }
-    &__text {
-        margin-left: 10px;
-        margin-right: 10px;
-        padding: 10px;
-        border-radius: 3px;
-        background-color: $lightPrimary;
-        font-size: 16px;
-    }
 }
 
 .card {
+    margin: 10px 10px 0px;
     font-size: 16px;
     padding: 20px;
     border-radius: 15px;
-    margin: 10px auto 0px;
-    width: 250px;
-    color: #fff;
+    width: 150px;
     &--teal {
-        background-color: $accent1;
+        background-color: $secondary;
     }
     &--blue {
-        background-color: $accent2;
+        background-color: $secondary;
     }
     &--orange {
-        background-color: $accent3;
+        background-color: $secondary;
+    }
+    &__metric {
+        font-size: 32px;
+        color: $primaryText;
+    }
+    &__desc {
+        font-size: 12px;
+        text-align: center;
+        color: darken($primaryText, 15%);
+    }
+    @include media(">tablet") {
+        &__metric {
+            font-size: 62px;
+        }
     }
 }
 
@@ -111,26 +169,28 @@ $accent3: rgb(255, 187, 40);
         }
         .recharts-text {
             font-size: 10px;
-            color: $darkPrimary;
+            color: $secondaryText;
         }
     }
     .recharts-legend-wrapper {
         width: 300px !important;
         .recharts-legend-item-text {
-            color: $darkPrimary;
+            color: $secondaryText;
         }
     }
 }
 
 .leaflet-container {
     margin-top: 20px;
-    height: 475px;
-    max-height: 475px;
+    height: 375px;
     div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper > div {
         font-family: 'Lato', sans-serif;
     }
     path.leaflet-interactive {
         stroke-width: 5px;
         stroke-dasharray: 10,10;
+    }
+    @include media(">=tablet") {
+        height: 475px;
     }
 }

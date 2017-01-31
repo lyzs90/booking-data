@@ -94,8 +94,12 @@ export default class Timer extends Component {
     render () {
         return (
             <div className="timer">
-                <h1>Visualising a week's worth of booking data...</h1>
-                <h3>{this.state.day}, {this.state.hours}:{this.state.mins}</h3>
+                <div className="timer__info">
+                    <p>
+                        Smove's current and past rental locations are marked on the map below. The car markers spawn at the start of a booking and despawns when they are returned. The dashed polylines mark instances where the start and end locations of a booking are not the same.
+                    </p>
+                </div>
+                <h3 className="timer__clock">{this.state.day}, {this.state.hours}:{this.state.mins}</h3>
             </div>
         );
     }

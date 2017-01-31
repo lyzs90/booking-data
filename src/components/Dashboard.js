@@ -8,18 +8,21 @@ export const Dashboard = ({ carMarkers, timeID, totalBookings }) => {
     return (
         <div className="dashboard">
             <div className="dashboard__deck">
-                <span className="card card--teal">{totalBookings} Total Bookings</span>
-                <span className="card card--blue">{carMarkers.length} Cars In Use</span>
-                <span className="card card--orange">Average Booking {averageDuration(carMarkers)} Hours</span>
+                <div className="card card--teal">
+                    <div className="card__metric">{totalBookings}</div>
+                    <div className="card__desc">Total Bookings</div>
+                </div>
+                <div className="card card--blue">
+                    <div className="card__metric">{carMarkers.length}</div>
+                    <div className="card__desc">Cars In Use</div>
+                </div>
+                <div className="card card--orange">
+                    <div className="card__metric">{averageDuration(carMarkers)}</div>
+                    <div className="card__desc">Average Booking (Hrs)</div>
+                </div>
             </div>
             <div className="dashboard__chart">
                 <UtilisationChart usage={carMarkers.length} timeID={timeID} />
-            </div>
-            <div className="dashboard__text">
-                <h3>Notes:</h3>
-                <p>
-                    Smove's current and past rental locations are marked on the map below. The car markers spawn at the start of a booking and despawns when they are returned. The dashed polylines mark instances where the start and end locations of a booking are not the same.
-                </p>
             </div>
         </div>
     )
