@@ -2,7 +2,7 @@
 
 Visualisation of one week's worth of Smove's booking data.
 
-<img src="https://s28.postimg.org/z8v10jw0t/smove.png" width="800">
+<img src="https://s24.postimg.org/mjkdv4sad/smove.png" width="800">
 
 ## Dataset
 
