@@ -12,116 +12,125 @@ $accent1: #22b5bf;
 $accent2: #1281ca;
 $accent3: rgb(255, 187, 40);
 
-#flexdiv {
+.container {
     font-family: 'Lato', sans-serif;
     display: flex;
     flex-direction: column;
-    #timer {
+}
+
+.timer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    h1 {
+        margin-top: 5px;
+        font-size: 24px;
+        color: $primary;
+        @include media(">tablet") {
+            font-size: 32px;
+        }
+    }
+    h3 {
+        margin: 0 auto;
+        color: $darkPrimary;
+    }
+}
+
+.basemap {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.dashboard {
+    @include media(">tablet") {
+        display: flex;
+        flex-direction: row;
+    }
+    &__deck {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        padding-left: 20px;
-        padding-right: 20px;
-        h1 {
-            margin-top: 5px;
-            font-size: 24px;
-            color: $primary;
-            @include media(">tablet") {
-                font-size: 32px;
-            }
+        justify-content: center;
+        @include media(">tablet") {
+            display: flex;
+            flex-direction: column;
+            margin-left: 5%;
         }
-        h3 {
-            margin: 0 auto;
+    }
+    &__chart {  // override default recharts styling
+        margin: 10px auto 0px;
+        @include media(">tablet") {
+            margin: 10px 0px 0px 0px;
+        }
+    }
+    &__text {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 10px;
+        border-radius: 3px;
+        background-color: $lightPrimary;
+        font-size: 16px;
+    }
+}
+
+.card {
+    font-size: 16px;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 10px auto 0px;
+    width: 250px;
+    color: #fff;
+    &--teal {
+        background-color: $accent1;
+    }
+    &--blue {
+        background-color: $accent2;
+    }
+    &--orange {
+        background-color: $accent3;
+    }
+}
+
+/**
+* Vendor overrides
+*/
+.recharts-wrapper {
+    width: 300px !important;
+    @include media(">=tablet") {
+        margin: 0 auto;
+        width: 500px !important;
+    }
+    .recharts-surface {
+        display: block;
+        margin: 0 auto;
+        width: 300px !important;
+        @include media(">=tablet") {
+            width: 500px !important;
+        }
+        .recharts-text {
+            font-size: 10px;
             color: $darkPrimary;
         }
     }
-    #basemap {
-        margin-top: 10px;
-        text-align: center;
-        #dashboard {
-            @include media(">tablet") {
-                display: flex;
-                flex-direction: row;
-            }
-            #infocards {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                @include media(">tablet") {
-                    display: flex;
-                    flex-direction: column;
-                    margin-left: 5%;
-                }
-                span {
-                    font-size: 16px;
-                    padding: 20px;
-                    border-radius: 15px;
-                    margin: 10px auto 0px;
-                    width: 250px;
-                    color: #fff;
-                }
-                span.kpi1 {
-                    background-color: $accent1;
-                }
-                span.kpi2 {
-                    background-color: $accent2;
-                }
-                span.kpi3 {
-                    background-color: $accent3;
-                }
-            }
-            #line-chart {  // override default recharts styling
-                margin: 10px auto 0px;
-                @include media(">tablet") {
-                    margin: 10px 0px 0px 0px;
-                }
-                .recharts-wrapper {
-                    width: 300px !important;
-                    @include media(">=tablet") {
-                        margin: 0 auto;
-                        width: 500px !important;
-                    }
-                    .recharts-surface {
-                        display: block;
-                        margin: 0 auto;
-                        width: 300px !important;
-                        @include media(">=tablet") {
-                            width: 500px !important;
-                        }
-                        .recharts-text {
-                            font-size: 10px;
-                            color: $darkPrimary;
-                        }
-                    }
-                    .recharts-legend-wrapper {
-                        width: 300px !important;
-                        .recharts-legend-item-text {
-                            color: $darkPrimary;
-                        }
-                    }
-                }
-            }
-            #desc {
-                margin-left: 10px;
-                margin-right: 10px;
-                padding: 10px;
-                border-radius: 3px;
-                background-color: $lightPrimary;
-                font-size: 16px;
-            }
+    .recharts-legend-wrapper {
+        width: 300px !important;
+        .recharts-legend-item-text {
+            color: $darkPrimary;
         }
-        .leaflet-container {
-            margin-top: 20px;
-            height: 475px;
-            max-height: 475px;
-            div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper > div {
-                font-family: 'Lato', sans-serif;
-            }
-            path.leaflet-interactive {
-                stroke-width: 5px;
-                stroke-dasharray: 10,10;
-            }
-        }
+    }
+}
+
+.leaflet-container {
+    margin-top: 20px;
+    height: 475px;
+    max-height: 475px;
+    div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper > div {
+        font-family: 'Lato', sans-serif;
+    }
+    path.leaflet-interactive {
+        stroke-width: 5px;
+        stroke-dasharray: 10,10;
     }
 }

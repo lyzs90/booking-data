@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const App = ({ changeMap, updateTimer, mapType, timeID }) => {
     return (
-        <div id="flexdiv">
+        <div className="container">
             <Timer changeMap={changeMap} timeID={timeID} updateTimer={updateTimer} />
             <Basemap mapType={mapType} timeID={timeID} />
         </div>
