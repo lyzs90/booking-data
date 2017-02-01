@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, TileLayer } from 'react-leaflet';
-import { ajax, getLocations, getBookings, findLoc } from '../utils/api';
+import { getLocations, getBookings, findLoc } from '../utils/api';
 import { setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
 import { SmoveMarkerList, CarMarkerList } from './MarkerList';
 import { PolylineList } from './PolylineList'
@@ -93,7 +93,6 @@ export default class Basemap extends Component {
                     }
                 })
                 .filter(Boolean)
-            console.log(activeCars)
             return activeCars;
         })
         .then((activeCars) => {

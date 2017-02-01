@@ -47,11 +47,6 @@ gulp.task('vendor', function () {
         './node_modules/leaflet/dist/**/*'
     ])
         .pipe(gulp.dest('./dist/vendor/leaflet'))
-
-    gulp.src([
-        './node_modules/jquery/dist/**/*'
-    ])
-        .pipe(gulp.dest('./dist/vendor/jquery'))
 });
 
 // Static Server + watching js/scss/html files

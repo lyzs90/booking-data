@@ -12,7 +12,7 @@ console.log(`Loaded ${locations.length} locations.`);
 var server = restify.createServer();
 server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.CORS({
-    origins: ['http://localhost:3000'],
+    origins: ['http://localhost:3000'],  // allow CORs from this origin
     credentials: true,
     headers: ['Access-Control-Allow-Origin']
 }));
