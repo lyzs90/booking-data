@@ -2,16 +2,14 @@
 
 import React from 'react';
 import Timer from '../components/Timer';
-import Basemap from '../components/Basemap';
 
 import { connect } from 'react-redux'
-import { changeMap, MapTypes } from '../actions/changeMap';
+import { changeMap } from '../actions/changeMap';
 import { updateTimer } from '../actions/updateTimer';
 
 // use connect method if 'smart' components need to listen to the store
 const mapStateToProps = (state) => {
     return {
-        mapType: state.mapType,
         timeID: state.timeID
     }
 }
@@ -27,13 +25,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const App = ({ changeMap, updateTimer, mapType, timeID }) => {
-    return (
-        <div className="container">
-            <Timer changeMap={changeMap} timeID={timeID} updateTimer={updateTimer} />
-            <Basemap mapType={mapType} timeID={timeID} />
-        </div>
-    )
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);
