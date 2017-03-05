@@ -2,31 +2,14 @@
 
 import React, { Component } from 'react';
 import { MapTypes } from '../actions/changeMap';
-import { timeToString } from '../utils/timeToString';
+import { weeklyReset, incrementDays, incrementHours, incrementMins, cacheCountdownID } from '../utils/stateChanges';
 
 const { DAY_MAP, NIGHT_MAP } = MapTypes;
-
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-const isNight = (hours) => {
-    return hours === '18';
-}
-
-const isDay = (hours) => {
-    return hours === '06';
-}
-
-const isEndOfWeek = (dayID, hours, mins) => {
-    return dayID === 6 && hours === '23' && mins === '45';
-}
-
-const isEndOfDay = (hours, mins) => {
-    return hours === '23' && mins === '45';
-}
-
-const isEndOfHour = (mins) => {
-    return mins === '45';
-}
+const isNight = (hours) => hours === '18';
+const isDay = (hours) => hours === '06';
+const isEndOfWeek = (dayID, hours, mins) => dayID === 6 && hours === '23' && mins === '45';
+const isEndOfDay = (hours, mins) => hours === '23' && mins === '45';
+const isEndOfHour = (mins) => mins === '45';
 
 export default class Timer extends Component {
     constructor (props) {
@@ -41,43 +24,27 @@ export default class Timer extends Component {
     }
 
     componentDidMount () {
-        let count = setInterval(() => {
-            // calculate the hours and mins from bigTime
+        let countdownID = setInterval(() => {
+            // calculate the hours and mins from string time
             let tempHours = this.state.hours * 1;
             let tempMins = this.state.mins * 1;
 
             if (isEndOfWeek(this.state.dayID, this.state.hours, this.state.mins)) {
                 // stop timer
                 clearInterval(this.state.countdownID);
-                this.setState({
-                    hours: '00',
-                    mins: '00',
-                    dayID: 0,
-                    day: 'Sunday'
-                });
+                this.setState(weeklyReset);
             } else if (isEndOfDay(this.state.hours, this.state.mins)) {
-                this.setState({
-                    hours: '00',
-                    dayID: this.state.dayID + 1,
-                    day: days[this.state.dayID]
-                });
+                this.setState(incrementDays);
             } else if (isEndOfHour(this.state.mins)) {
-                this.setState({
-                    mins: '00',
-                    hours: timeToString(tempHours + 1)
-                });
+                this.setState(incrementHours(tempHours));
             } else {
                 // increment by 15mins
                 this.props.updateTimer();
-                this.setState({
-                    mins: timeToString(tempMins + 15)
-                });
+                this.setState(incrementMins(tempMins));
             }
         }, 1000)
 
-        this.setState({
-            countdownID: count
-        });
+        this.setState(cacheCountdownID(countdownID));
     }
 
     componentDidUpdate () {

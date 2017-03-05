@@ -1,5 +1,7 @@
 'use strict';
 
+import { timeToString } from '../utils/timeToString';
+
 /*
   Fuctional setState: Declare state update logic outside of component class. setState will take a function of signature (state, props) => newState. If you need to pass in extra arguments, you have to wrap your functional setState in another function.
   Benefits:
@@ -9,6 +11,9 @@
   - Clean / resuable code
 */
 
+/*
+    Basemap setState Functions
+*/
 export const cacheLocations = (locData) => {
     return () => ({
         locData
@@ -38,4 +43,42 @@ export const updateCarMarkers = (array) => {
         carMarkers: array
     });
 };
+
+/*
+    Timer setState Functions
+*/
+export const weeklyReset = () => ({
+    hours: '00',
+    mins: '00',
+    dayID: 0,
+    day: 'Sunday'
+});
+
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+export const incrementDays = (state) => ({
+    hours: '00',
+    dayID: state.dayID + 1,
+    day: days[state.dayID]
+});
+
+export const incrementHours = (tempHours) => {
+    return () => ({
+        mins: '00',
+        hours: timeToString(tempHours + 1)
+    });
+};
+
+export const incrementMins = (tempMins) => {
+    return () => ({
+        mins: timeToString(tempMins + 15)
+    });
+};
+
+export const cacheCountdownID = (countdownID) => {
+    return () => ({
+        countdownID
+    });
+};
+
 
