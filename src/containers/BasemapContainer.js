@@ -11,8 +11,20 @@ import { updateTimer } from '../actions/updateTimer';
 const mapStateToProps = (state) => {
     return {
         mapType: state.mapType,
-        timeID: state.timeID
+        timeID: state.timeID,
+        locData: state.locations
     }
 }
 
-export default connect(mapStateToProps)(Basemap);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getLocations: () => {
+            dispatch({type: 'FETCH_LOCATIONS_REQUESTED'})
+        },
+        getBookings: (timeID) => {
+            dispatch({type: 'FETCH_BOOKINGS_REQUESTED', payload: {timeID}})
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basemap);

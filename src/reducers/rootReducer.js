@@ -29,9 +29,35 @@ const timeID = (state = 0, action) => {
     }
 }
 
+const locations = (state = [], action) => {
+    switch (action.type) {
+        case 'FETCH_LOCATIONS_SUCCEEDED':
+            return action.locations;
+        case 'FETCH_LOCATIONS_FAILED':
+            console.log(action.message);
+            return state;
+        default:
+            return state;
+    }
+}
+
+const bookings = (state = [], action) => {
+    switch (action.type) {
+        case 'FETCH_BOOKINGS_SUCCEEDED':
+            return action.bookings;
+        case 'FETCH_BOOKINGS_FAILED':
+            console.log(action.message);
+            return state;
+        default:
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
     mapType,
-    timeID
+    timeID,
+    locations,
+    bookings
 })
 
 export default rootReducer;

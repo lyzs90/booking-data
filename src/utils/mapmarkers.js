@@ -27,15 +27,16 @@ export const initBasemap = (locData) => {
 /*
     Passing context is necessary so that this.state and this.setState will be obtained/called from the basemap context
 */
-export const getActiveCars = (context, nextProps, bookingsData) => {
-    const state = context.state;
+export const getActiveCars = (context, bookingsData) => {
+    console.log(bookingsData)
+    const props = context.props;
     const activeCars = bookingsData
-        .filter((booking) => booking.start === nextProps.timeID)
+        .filter((booking) => booking.start === props.timeID)
         .map((booking) => {
             try {
                 // convert start and end location id to latlng
-                booking.start_location = findLoc(state.locData, booking.start_location);
-                booking.end_location = findLoc(state.locData, booking.end_location)
+                booking.start_location = findLoc(props.locData, booking.start_location);
+                booking.end_location = findLoc(props.locData, booking.end_location)
 
                 // draw polyline if start location =/= end location
                 if (JSON.stringify(booking.start_location) !== JSON.stringify(booking.end_location)) {

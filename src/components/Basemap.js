@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, TileLayer } from 'react-leaflet';
-import { getLocations, getBookings, findLoc } from '../utils/api';
+import { getBookings, findLoc } from '../utils/api';
 import { initBasemap, getActiveCars, setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
 import { cacheLocations, spawnSmoveMarkers, updateTotalBookings, addPolylines, updateTimeID, updateCarMarkers } from '../utils/stateChanges';
 import { SmoveMarkerList, CarMarkerList } from './MarkerList';
@@ -18,33 +18,31 @@ export default class Basemap extends Component {
         this.state = {
             smoveMarkers: [],
             carMarkers: [],
-            locData: [],
             totalBookings: 0,
             polyLineList: []
         };
     }
 
     componentDidMount () {
-        getLocations()
-        .then((locData) => initBasemap(locData))
-        .then((results) => {
-            this.setState(cacheLocations(results.locData));  // Persist location data for use in findLoc call
-            this.setState(spawnSmoveMarkers(results.activeMarkers, results.inactiveMarkers));
-        })
-        .catch((error) => {
-            throw error;
-        });
+        // prefetch locations
+        this.props.getLocations();
     }
 
     componentWillReceiveProps (nextProps) {
+        if (this.props.locData.length === 0 && nextProps.locData.length !== 0) {
+            // if basemap not initialised
+            const results = initBasemap(nextProps.locData);
+            this.setState(spawnSmoveMarkers(results.activeMarkers, results.inactiveMarkers));
+        }
+
         const basemap = this;
-        getBookings(nextProps.timeID)
+        getBookings(this.props.timeID)
         .then((bookingsData) => {
             // record no. of bookings
             this.setState(updateTotalBookings(bookingsData));
             return bookingsData;
         })
-        .then((bookingsData) => getActiveCars(basemap, nextProps, bookingsData))
+        .then((bookingsData) => getActiveCars(basemap, bookingsData))
         .then((activeCars) => {
             // append new bookings
             this.setState(updateCarMarkers([...this.state.carMarkers, ...activeCars]))
@@ -53,9 +51,6 @@ export default class Basemap extends Component {
             // iterate through existing car marker list and remove those whose bookings ended
             let activeCars = deleteFromMarkerList(this.state.carMarkers, nextProps.timeID);
             this.setState(updateCarMarkers(activeCars));
-        })
-        .then(() => {
-            this.setState(updateTimeID);  // can just use function name here
         })
         .catch((error) => {
             throw error;
