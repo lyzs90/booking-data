@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, TileLayer } from 'react-leaflet';
 import { getLocations, getBookings, findLoc } from '../utils/api';
-import { setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
+import { initBasemap, getActiveCars, setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
+import { cacheLocations, spawnSmoveMarkers, updateTotalBookings, addPolylines, updateTimeID, updateCarMarkers } from '../utils/stateChanges';
 import { SmoveMarkerList, CarMarkerList } from './MarkerList';
 import { PolylineList } from './PolylineList'
 import { Dashboard } from './Dashboard';
@@ -26,30 +27,10 @@ export default class Basemap extends Component {
 
     componentDidMount () {
         getLocations()
-        .then((locData) => {
-            const inactiveMarkers = locData
-                .filter((loc) => loc.deleted === 1)
-                .map((loc) => {
-                    return {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker-fade.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted}
-                });
-
-            const activeMarkers = locData
-                .filter((loc) => loc.deleted === 0)
-                .map((loc) => {
-                    return {key: locData.indexOf(loc), position: [Number(loc.latitude), Number(loc.longitude)], icon: setIcon('http://localhost:8080/public/marker.svg'), shortName: loc.parking_shortname, id: loc.id, description: loc.description, deleted: loc.deleted}
-                });
-
-            return {
-                locData,
-                inactiveMarkers,
-                activeMarkers
-            };
-        })
+        .then((locData) => initBasemap(locData))
         .then((results) => {
-            this.setState({
-                locData: results.locData,  // Persist location data for use in next ajax call
-                smoveMarkers: [...results.inactiveMarkers, ...results.activeMarkers]
-            });
+            this.setState(cacheLocations(results.locData));  // Persist location data for use in findLoc call
+            this.setState(spawnSmoveMarkers(results.activeMarkers, results.inactiveMarkers));
         })
         .catch((error) => {
             throw error;
@@ -57,58 +38,25 @@ export default class Basemap extends Component {
     }
 
     componentWillReceiveProps (nextProps) {
+        const basemap = this;
         getBookings(this.state.timeID)
         .then((bookingsData) => {
             // record no. of bookings
-            this.setState({
-                totalBookings: this.state.totalBookings + bookingsData.length
-            });
+            this.setState(updateTotalBookings(bookingsData));
             return bookingsData;
         })
-        .then((bookingsData) => {
-            const activeCars = bookingsData
-                .filter((booking) => booking.start === this.state.timeID)
-                .map((booking) => {
-                    try {
-                        // convert start and end location id to latlng
-                        booking.start_location = findLoc(this.state.locData, booking.start_location);
-                        booking.end_location = findLoc(this.state.locData, booking.end_location)
-
-                        // draw polyline if start location =/= end location
-                        if (JSON.stringify(booking.start_location) !== JSON.stringify(booking.end_location)) {
-                            let tmpPolyline = [
-                                booking.start_location,
-                                booking.end_location
-                            ];
-                            this.setState({
-                                polyLineList: this.state.polyLineList.concat([tmpPolyline])
-                            })
-                        }
-
-                        // pass props into markerlist
-                        return {key: bookingsData.indexOf(booking), position: [Number(booking.start_location[0]), Number(booking.start_location[1])], icon: setIcon('http://localhost:8080/public/custom-car.svg'), car: booking.car, id: booking.id, start: booking.start, end: booking.end};
-                    } catch (err) {
-                        // Location ID does not exist
-                        return false;
-                    }
-                })
-                .filter(Boolean)
-            return activeCars;
-        })
+        .then((bookingsData) => getActiveCars(basemap, bookingsData))
         .then((activeCars) => {
-            this.setState({
-                carMarkers: [...this.state.carMarkers, ...activeCars]
-            })
+            // append new bookings
+            this.setState(updateCarMarkers([...this.state.carMarkers, ...activeCars]))
         })
         .then(() => {
             // iterate through existing car marker list and remove those whose bookings ended
-            return deleteFromMarkerList(this.state.carMarkers, this.state.timeID);
+            let activeCars = deleteFromMarkerList(this.state.carMarkers, this.state.timeID);
+            this.setState(updateCarMarkers(activeCars));
         })
-        .then((carMarkers) => {
-            this.setState({
-                timeID: this.props.timeID,
-                carMarkers: carMarkers
-            });
+        .then(() => {
+            this.setState(updateTimeID);  // can just use function name here
         })
         .catch((error) => {
             throw error;
