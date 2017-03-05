@@ -36,7 +36,6 @@ export default class Timer extends Component {
             dayID: 1,
             hours: '06',
             mins: '00',
-            timeID: props.timeID,
             countdownID: ''
         };
     }
@@ -69,9 +68,9 @@ export default class Timer extends Component {
                 });
             } else {
                 // increment by 15mins
+                this.props.updateTimer();
                 this.setState({
-                    mins: timeToString(tempMins + 15),
-                    timeID: this.props.updateTimer()
+                    mins: timeToString(tempMins + 15)
                 });
             }
         }, 1000)
@@ -81,7 +80,7 @@ export default class Timer extends Component {
         });
     }
 
-    componentWillReceiveProps (nextProps) {
+    componentDidUpdate () {
         if (isNight(this.state.hours)) {
             // change to night map at 6pm
             this.props.changeMap(NIGHT_MAP);

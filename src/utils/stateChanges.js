@@ -33,11 +33,6 @@ export const addPolylines = (tmpPolyline) => {
     });
 };
 
-// doesnt require extra arguments, just prev state and props
-export const updateTimeID = (state, props) => ({
-    timeID: props.timeID
-})
-
 export const updateCarMarkers = (array) => {
     return () => ({
         carMarkers: array

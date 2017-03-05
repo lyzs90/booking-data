@@ -16,7 +16,6 @@ export default class Basemap extends Component {
     constructor (props) {
         super();
         this.state = {
-            timeID: props.timeID,
             smoveMarkers: [],
             carMarkers: [],
             locData: [],
@@ -39,20 +38,20 @@ export default class Basemap extends Component {
 
     componentWillReceiveProps (nextProps) {
         const basemap = this;
-        getBookings(this.state.timeID)
+        getBookings(nextProps.timeID)
         .then((bookingsData) => {
             // record no. of bookings
             this.setState(updateTotalBookings(bookingsData));
             return bookingsData;
         })
-        .then((bookingsData) => getActiveCars(basemap, bookingsData))
+        .then((bookingsData) => getActiveCars(basemap, nextProps, bookingsData))
         .then((activeCars) => {
             // append new bookings
             this.setState(updateCarMarkers([...this.state.carMarkers, ...activeCars]))
         })
         .then(() => {
             // iterate through existing car marker list and remove those whose bookings ended
-            let activeCars = deleteFromMarkerList(this.state.carMarkers, this.state.timeID);
+            let activeCars = deleteFromMarkerList(this.state.carMarkers, nextProps.timeID);
             this.setState(updateCarMarkers(activeCars));
         })
         .then(() => {

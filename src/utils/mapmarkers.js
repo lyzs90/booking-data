@@ -27,10 +27,10 @@ export const initBasemap = (locData) => {
 /*
     Passing context is necessary so that this.state and this.setState will be obtained/called from the basemap context
 */
-export const getActiveCars = (context, bookingsData) => {
+export const getActiveCars = (context, nextProps, bookingsData) => {
     const state = context.state;
     const activeCars = bookingsData
-        .filter((booking) => booking.start === state.timeID)
+        .filter((booking) => booking.start === nextProps.timeID)
         .map((booking) => {
             try {
                 // convert start and end location id to latlng
