@@ -3,9 +3,11 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, TileLayer } from 'react-leaflet';
-import { getBookings, findLoc } from '../utils/api';
-import { initBasemap, getActiveCars, setIcon, addToMarkerList, deleteFromMarkerList } from '../utils/mapmarkers';
+
+import { findLoc } from '../utils/api';
+import { initBasemap, getActiveCars, getInactiveCars } from '../utils/mapmarkers';
 import { cacheLocations, spawnSmoveMarkers, updateTotalBookings, addPolylines, updateTimeID, updateCarMarkers } from '../utils/stateChanges';
+
 import { SmoveMarkerList, CarMarkerList } from './MarkerList';
 import { PolylineList } from './PolylineList'
 import { Dashboard } from './Dashboard';
@@ -35,26 +37,21 @@ export default class Basemap extends Component {
             this.setState(spawnSmoveMarkers(results.activeMarkers, results.inactiveMarkers));
         }
 
-        const basemap = this;
-        getBookings(nextProps.timeID)
-        .then((bookingsData) => {
+        if (nextProps.timeID - this.props.timeID === 1) {
+            const basemap = this;
+            this.props.getBookings(this.props.timeID)
+
             // record no. of bookings
-            this.setState(updateTotalBookings(bookingsData));
-            return bookingsData;
-        })
-        .then((bookingsData) => getActiveCars(basemap, nextProps, bookingsData))
-        .then((activeCars) => {
+            this.setState(updateTotalBookings(this.props.bookingsData));
+
             // append new bookings
-            this.setState(updateCarMarkers([...this.state.carMarkers, ...activeCars]))
-        })
-        .then(() => {
+            const activeCars = getActiveCars(basemap, this.props);
+            this.setState(updateCarMarkers(activeCars, []))
+
             // iterate through existing car marker list and remove those whose bookings ended
-            let activeCars = deleteFromMarkerList(this.state.carMarkers, nextProps.timeID);
-            this.setState(updateCarMarkers(activeCars));
-        })
-        .catch((error) => {
-            throw error;
-        });
+            const inactiveCars = getInactiveCars(this.state.carMarkers, this.props.timeID);
+            this.setState(updateCarMarkers([], inactiveCars));
+        }
     }
 
     render () {

@@ -1,5 +1,7 @@
 'use strict';
 
+import _ from 'lodash';
+
 import { timeToString } from '../utils/timeToString';
 
 /*
@@ -38,9 +40,10 @@ export const addPolylines = (tmpPolyline) => {
     });
 };
 
-export const updateCarMarkers = (array) => {
-    return () => ({
-        carMarkers: array
+export const updateCarMarkers = (activeCars, inactiveCars) => {
+    return (state) => ({
+        // return the diff between both arrays i.e. remove inactiveCars
+        carMarkers: _.difference([...state.carMarkers, ...activeCars], inactiveCars)
     });
 };
 

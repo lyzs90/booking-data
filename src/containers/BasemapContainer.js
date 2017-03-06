@@ -12,7 +12,8 @@ const mapStateToProps = (state) => {
     return {
         mapType: state.mapType,
         timeID: state.timeID,
-        locData: state.locations
+        locData: state.locations,
+        bookingsData: state.bookings
     }
 }
 
