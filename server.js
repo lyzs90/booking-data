@@ -40,7 +40,6 @@ server.get('/booking/:start', (req, res, next) => {
             results.push(booking);
         }
     }
-    console.log(results);
     res.send(results);
     next();
 });

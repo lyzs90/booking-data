@@ -36,13 +36,13 @@ export default class Basemap extends Component {
         }
 
         const basemap = this;
-        getBookings(this.props.timeID)
+        getBookings(nextProps.timeID)
         .then((bookingsData) => {
             // record no. of bookings
             this.setState(updateTotalBookings(bookingsData));
             return bookingsData;
         })
-        .then((bookingsData) => getActiveCars(basemap, bookingsData))
+        .then((bookingsData) => getActiveCars(basemap, nextProps, bookingsData))
         .then((activeCars) => {
             // append new bookings
             this.setState(updateCarMarkers([...this.state.carMarkers, ...activeCars]))
