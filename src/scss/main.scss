@@ -19,35 +19,6 @@ body {
     background-color: $primary;
 }
 
-.sidebar {
-    @include media("<desktop") {
-        .fa {
-            display: none;
-        }
-    }
-    @include media(">tablet") {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 65px;
-        height: 100%;
-        background: $darkPrimary;
-        -webkit-box-shadow: 2px 0px 5px -2px $darkPrimary;
-        &__button {
-            transition: all 0.5s ease;
-            text-align: center;
-            padding: 5px 0;
-            background-color: $accent;
-        }
-        &__button:hover {
-            opacity: 0.5;
-        }
-        .link--active {
-            color: $primaryText;
-        }
-    }
-}
-
 .container {
     font-family: 'Lato', sans-serif;
     display: flex;
@@ -90,7 +61,6 @@ body {
 .basemap {
     @include media(">tablet") {
         margin-top: 2%;
-        margin-left: 5%;
         text-align: center;
     }
 }

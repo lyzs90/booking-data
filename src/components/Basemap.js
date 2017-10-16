@@ -8,7 +8,7 @@ import { findLoc } from '../utils/api';
 import { initBasemap, getActiveCars, getInactiveCars } from '../utils/mapmarkers';
 import { cacheLocations, spawnSmoveMarkers, updateTotalBookings, addPolylines, updateTimeID, updateCarMarkers } from '../utils/stateChanges';
 
-import { SmoveMarkerList, CarMarkerList } from './MarkerList';
+import { MarkerList } from './MarkerList';
 import { PolylineList } from './PolylineList'
 import { Dashboard } from './Dashboard';
 
@@ -57,7 +57,7 @@ export default class Basemap extends Component {
     render () {
         return (
             <div className="basemap">
-                <Dashboard carMarkers={this.state.carMarkers} timeID={this.state.timeID} totalBookings={this.state.totalBookings} />
+                <Dashboard carMarkers={this.state.carMarkers} timeID={this.props.timeID} totalBookings={this.state.totalBookings} />
                 <Map center={[center.x, center.y]} zoom={12} maxBounds={[[1.56073, 104.11475], [1.16, 103.502]]}>
                     <TileLayer
                         url={this.props.mapType}
@@ -66,8 +66,8 @@ export default class Basemap extends Component {
                         maxZoom='18'
                         minZoom='11'
                     />
-                    <SmoveMarkerList markers={this.state.smoveMarkers} />
-                    <CarMarkerList markers={this.state.carMarkers} />
+                    <MarkerList type="smove" markers={this.state.smoveMarkers} />
+                    <MarkerList type="car" markers={this.state.carMarkers} />
                     <PolylineList polylines={this.state.polyLineList} />
                 </Map>
             </div>
